@@ -6,7 +6,7 @@ using GenericUnityGame;
 public class ControlsFocusState : GameState
 {
     public override void Begin() {
-        base.Begin(); 
+        base.Begin();
         Debug.Log("Controls Focus");
     }
 }
