@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GenericUnityGame;
-
+/*
+MainMenu prefab component list:
+- GameEventListenerId
+- MainMenu
+*/
 public class MainMenu : GameStateMachine {
     
     private double focusChangeTimerDefault, focusChangeTimer;
+    public const string TAG = "mainMenu";
 
     public override void Begin() {
         base.Begin();
-        this.gameObject.GetComponent<GameEventListenerId>().SetListenerId("mainMenu");
-        GameSystem.SetTimeMultiplier("mainMenu", 1.0);
+        this.gameObject.GetComponent<GameEventListenerId>().SetListenerId(MainMenu.TAG);
+        GameSystem.SetTimeMultiplier(MainMenu.TAG, 1.0);
 
-        // TODO: Change these GameState objects to their specific GameState child classes
         StartMatchFocusState startMatchFocus = new StartMatchFocusState();
         StartMatchSelectedState startMatchSelected = new StartMatchSelectedState();
         ControlsFocusState controlsFocus = new ControlsFocusState();
@@ -29,9 +33,9 @@ public class MainMenu : GameStateMachine {
         exitGameFocus.AddStateChange("up", controlsFocus);
         exitGameFocus.AddStateChange("selected", exitGameSelected);
 
-        GameInputState input = new GameInputState("mainMenu", 1);
-        input.SetInputMapping("leftStickUpDown1", "leftStick");
-        input.SetInputMapping("a1", "select");
+        GameInputState input = new GameInputState(MainMenu.TAG, 1);
+        input.SetInputMapping(GameInputState.LEFT_STICK_UP_DOWN, "leftStick");
+        input.SetInputMapping(GameInputState.A, "select");
 
         this.focusChangeTimer = this.focusChangeTimerDefault = 0.2;
         this.AddCurrentState(startMatchFocus);
@@ -44,7 +48,7 @@ public class MainMenu : GameStateMachine {
 
     public override void HandleGameEvent(GameEvent gameEvent) {
         base.HandleGameEvent(gameEvent);
-        if (gameEvent.GetName().Equals("select") && gameEvent.GetGameData<string>().Equals(GameInputState.START)) {
+        if (gameEvent.GetName().Equals("select") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             new TypedGameEvent<bool>(this.GetListenerId(), "selected", true);
         } else if (this.focusChangeTimer <= 0) {
             if (gameEvent.GetName().Equals("leftStick")) {
@@ -57,7 +61,7 @@ public class MainMenu : GameStateMachine {
                 }
             }
         } else {
-            this.focusChangeTimer -= GameSystem.GetDeltaTime("mainMenu", Time.deltaTime);
+            this.focusChangeTimer -= GameSystem.GetDeltaTime(MainMenu.TAG, Time.deltaTime);
         }
     }
 }
