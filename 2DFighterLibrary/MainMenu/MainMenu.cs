@@ -35,7 +35,7 @@ public class MainMenu : GameStateMachine {
         exitGameFocus.AddStateChange("up", controlsFocus);
         exitGameFocus.AddStateChange("selected", exitGameSelected);
 
-        GameInputState input = new GameInputState(MainMenu.TAG, 1);
+        GameInputState input = new GameInputState(this.listenerId, 1);
         input.SetInputMapping(GameInputState.LEFT_STICK_UP_DOWN, "leftStick");
         input.SetInputMapping(GameInputState.A, "select");
 
