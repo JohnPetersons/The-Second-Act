@@ -17,6 +17,8 @@ public class Player : GameStateMachine {
     public override void Begin() {
         base.Begin();
 
+        GameSystem.SetTimeMultiplier("gameplay", 1.0);
+
         IdleState Idle = new IdleState(this.listenerId);
         MovingForwardState MovingForward = new MovingForwardState(this.listenerId);
         MovingBackwardState MovingBackward = new MovingBackwardState(this.listenerId);
@@ -102,18 +104,20 @@ public class Player : GameStateMachine {
     }
 
     public override void HandleGameEvent(GameEvent gameEvent) {
-        base.HandleGameEvent(gameEvent);
-        if (gameEvent.GetName().Equals("moveStick")) {
-            double val = gameEvent.GetGameData<double>() * this.direction;
-            if (val > 0) {
-                new TypedGameEvent<bool>(this.GetListenerId(), "moveForward", true);
-            } else if (val < 0) {
-                new TypedGameEvent<bool>(this.GetListenerId(), "moveBackward", true);
+        if (GameSystem.GetTimeMultiplier("gameplay") > 0) {
+            base.HandleGameEvent(gameEvent);
+            if (gameEvent.GetName().Equals("moveStick")) {
+                double val = gameEvent.GetGameData<double>() * this.direction;
+                if (val > 0) {
+                    new TypedGameEvent<bool>(this.GetListenerId(), "moveForward", true);
+                } else if (val < 0) {
+                    new TypedGameEvent<bool>(this.GetListenerId(), "moveBackward", true);
+                }
+            } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+                new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
+            } else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+                new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
             }
-        } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-            new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
-        } else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-            new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
         }
     }
 }
