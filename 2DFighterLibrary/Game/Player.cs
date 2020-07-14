@@ -20,21 +20,21 @@ public class Player : GameStateMachine {
         IdleState Idle = new IdleState(this.listenerId);
         MovingForwardState MovingForward = new MovingForwardState(this.listenerId);
         MovingBackwardState MovingBackward = new MovingBackwardState(this.listenerId);
-        GameState Charging = new GameState();
-        GameState Recovering = new GameState();
-        GameState CollisionImpact = new GameState();
-        GameState CollisionWin = new GameState();
-        GameState CollisionLoss = new GameState();
-        GameState KnockedBack = new GameState();
-        GameState CollisionRecover = new GameState();
-        GameState Victory = new GameState();
-        GameState Defeat = new GameState();
-        GameState UsingSpecial = new GameState();
+        ChargingState Charging = new ChargingState(this.listenerId);
+        RecoveringState Recovering = new RecoveringState(this.listenerId);
+        CollisionImpactState CollisionImpact = new CollisionImpactState(this.listenerId);
+        CollisionWinState CollisionWin = new CollisionWinState(this.listenerId);
+        CollisionLossState CollisionLoss = new CollisionLossState(this.listenerId);
+        KnockedBackState KnockedBack = new KnockedBackState(this.listenerId);
+        CollisionRecoverState CollisionRecover = new CollisionRecoverState(this.listenerId);
+        VictoryState Victory = new VictoryState(this.listenerId);
+        DefeatState Defeat = new DefeatState(this.listenerId);
+        UsingSpecialState UsingSpecial = new UsingSpecialState(this.listenerId);
 
-        GameState SpecialAvailable = new GameState();
-        GameState SpecialActivate = new GameState();
-        GameState SpecialCharging = new GameState();
-        GameState SpecialUsed = new GameState();
+        SpecialAvailableState SpecialAvailable = new SpecialAvailableState(this.listenerId);
+        SpecialActivateState SpecialActivate = new SpecialActivateState(this.listenerId);
+        SpecialChargingState SpecialCharging = new SpecialChargingState(this.listenerId);
+        SpecialUsedState SpecialUsed = new SpecialUsedState(this.listenerId);
 
         Idle.AddStateChange("moveForward", MovingForward);
         Idle.AddStateChange("moveBackward", MovingBackward);
@@ -99,5 +99,21 @@ public class Player : GameStateMachine {
 
     public int GetDirection() {
         return this.direction;
+    }
+
+    public override void HandleGameEvent(GameEvent gameEvent) {
+        base.HandleGameEvent(gameEvent);
+        if (gameEvent.GetName().Equals("moveStick")) {
+            double val = gameEvent.GetGameData<double>() * this.direction;
+            if (val > 0) {
+                new TypedGameEvent<bool>(this.GetListenerId(), "moveForward", true);
+            } else if (val < 0) {
+                new TypedGameEvent<bool>(this.GetListenerId(), "moveBackward", true);
+            }
+        } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
+        } else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
+        }
     }
 }
