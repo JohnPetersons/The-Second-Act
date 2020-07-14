@@ -6,6 +6,8 @@ using GenericUnityGame;
 MainMenu prefab component list:
 - GameEventListenerId
 - MainMenu
+TODO: Create the following components/things
+- Main menu header
 */
 public class MainMenu : GameStateMachine {
     
@@ -14,7 +16,7 @@ public class MainMenu : GameStateMachine {
 
     public override void Begin() {
         base.Begin();
-        this.gameObject.GetComponent<GameEventListenerId>().SetListenerId(MainMenu.TAG);
+        this.SetListenerId(MainMenu.TAG);
         GameSystem.SetTimeMultiplier(MainMenu.TAG, 1.0);
 
         StartMatchFocusState startMatchFocus = new StartMatchFocusState();

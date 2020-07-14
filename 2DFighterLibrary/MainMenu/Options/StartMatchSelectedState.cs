@@ -7,6 +7,7 @@ public class StartMatchSelectedState : GameState
 {
     public override void Begin() {
         base.Begin();
+        new TypedGameEvent<string>(GameMaster.TAG, "startMatch", "Match Started");
         Debug.Log("Start Match Selected");
     }
 }
