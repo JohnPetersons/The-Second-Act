@@ -35,9 +35,9 @@ public class Player : GameStateMachine {
         CollisionWinState CollisionWin = new CollisionWinState(this.listenerId);
         CollisionLossState CollisionLoss = new CollisionLossState(this.listenerId);
 
-        GameState Ready = new GameState();
-        GameState Playing = new GameState();
-        GameState Paused = new GameState();
+        PlayerReadyState Ready = new PlayerReadyState(this.listenerId);
+        PlayerPlayingState Playing = new PlayerPlayingState(this.listenerId);
+        PlayerPausedState Paused = new PlayerPausedState(this.listenerId);
         VictoryState Victory = new VictoryState(this.listenerId);
         DefeatState Defeat = new DefeatState(this.listenerId);
 
@@ -94,6 +94,7 @@ public class Player : GameStateMachine {
         this.input.SetInputMapping(GameInputState.LEFT_STICK_LEFT_RIGHT, "moveStick");
         this.input.SetInputMapping(GameInputState.A, "chargeButton");
         this.input.SetInputMapping(GameInputState.B, "specialButton");
+        this.input.SetInputMapping(GameInputState.START, "start");
 
         this.AddCurrentState(this.input);
         this.AddCurrentState(Idle);
@@ -101,9 +102,7 @@ public class Player : GameStateMachine {
     }
 
     public override void Tick() {
-        if (GameSystem.GetTimeMultiplier(GameSystem.GAMEPLAY) > 0) {
-            base.Tick();
-        }
+        base.Tick();
     }
 
     public void SetPlayerNumber(int i) {
@@ -116,26 +115,5 @@ public class Player : GameStateMachine {
 
     public int GetDirection() {
         return this.direction;
-    }
-
-    public override void HandleGameEvent(GameEvent gameEvent) {
-        if (GameSystem.GetTimeMultiplier(GameSystem.GAMEPLAY) > 0) {
-            base.HandleGameEvent(gameEvent);
-            if (gameEvent.GetName().Equals("moveStick")) {
-                double val = gameEvent.GetGameData<double>() * this.direction;
-                if (val > 0) {
-                    new TypedGameEvent<bool>(this.GetListenerId(), "moveForward", true);
-                } else if (val < 0) {
-                    new TypedGameEvent<bool>(this.GetListenerId(), "moveBackward", true);
-                }
-            } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-                new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
-            //} else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-                // commented out until I put in specials
-                //new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
-            } else if (gameEvent.GetName().Equals("triggerEnter")) {
-                new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
-            }
-        }
     }
 }
