@@ -5,8 +5,11 @@ using GenericUnityGame;
 
 public class Player2 : Player {
     
+    public const string TAG = "player2";
+
     public override void Begin() {
         base.Begin();
+        this.SetListenerId(Player2.TAG);
         this.SetPlayerNumber(2);
         this.SetDirection(Player.LEFT);
     }

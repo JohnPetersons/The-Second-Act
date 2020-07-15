@@ -32,8 +32,10 @@ public class PlayerPlayingState: GameEventListenerState
             new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
         } else if (gameEvent.GetName().Equals("start")) {
             GameSystem.SetTimeMultiplier(GameSystem.GAMEPLAY, 0);
-            new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
-            new TypedGameEvent<bool>(this.GetListenerId(), "pause", true);
+            new TypedGameEvent<bool>(Player1.TAG, "stop", true);
+            new TypedGameEvent<bool>(Player1.TAG, "pause", true);
+            new TypedGameEvent<bool>(Player2.TAG, "stop", true);
+            new TypedGameEvent<bool>(Player2.TAG, "pause", true);
         }
         return result;
     }

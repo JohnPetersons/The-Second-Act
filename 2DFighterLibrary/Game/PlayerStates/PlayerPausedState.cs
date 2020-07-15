@@ -17,7 +17,8 @@ public class PlayerPausedState: GameEventListenerState
         GameState result = base.GetNextState(gameEvent);
         if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             GameSystem.SetTimeMultiplier(GameSystem.GAMEPLAY, 1.0);
-            new TypedGameEvent<bool>(this.GetListenerId(), "play", true);
+            new TypedGameEvent<bool>(Player1.TAG, "play", true);
+            new TypedGameEvent<bool>(Player2.TAG, "play", true);
         }
         return result;
     }
