@@ -5,12 +5,26 @@ using GenericUnityGame;
 
 public class CollisionWinState : GameEventListenerState
 {
-    public CollisionWinState(GameEventListenerId listenerId): base(listenerId) {
 
+    private double timer;
+    private Player player;
+
+    public CollisionWinState(GameEventListenerId listenerId): base(listenerId) {
+        this.player = this.gameObject.GetComponent<Player>();
     }
 
     public override void Begin() {
         base.Begin();
         Debug.Log("Collision win");
+        this.timer = 2.0;
+    }
+
+    public override void Tick() {
+        base.Tick();
+        this.gameObject.transform.Translate(new Vector3(-7.5f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+        this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
+        if (this.timer < 0) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "recover", true);
+        }
     }
 }

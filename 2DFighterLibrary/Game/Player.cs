@@ -29,13 +29,10 @@ public class Player : GameStateMachine {
         ChargingState Charging = new ChargingState(this.listenerId);
         SpecialActivateState SpecialActivate = new SpecialActivateState(this.listenerId);
         SpecialChargingState SpecialCharging = new SpecialChargingState(this.listenerId);
-        RecoveringState Recovering = new RecoveringState(this.listenerId);
-
         CollisionWinCondition CollisionWinCond = new CollisionWinCondition(this.listenerId); 
         CollisionLossCondition CollisionLossCond = new CollisionLossCondition(this.listenerId); 
         CollisionWinState CollisionWin = new CollisionWinState(this.listenerId);
         CollisionLossState CollisionLoss = new CollisionLossState(this.listenerId);
-        CollisionRecoverState CollisionRecover = new CollisionRecoverState(this.listenerId);
 
         GameState Ready = new GameState();
         GameState Playing = new GameState();
@@ -72,23 +69,19 @@ public class Player : GameStateMachine {
         MovingBackward.AddGameStateCondition(CollisionWinCond);
         MovingBackward.AddGameStateCondition(CollisionLossCond);
         MovingBackward.AddGameStateCondition(SpecialActivateCond);
-        Charging.AddStateChange("stop", Recovering);
+        Charging.AddStateChange("stop", Idle);
         Charging.AddStateChange("collisionWin", CollisionWin);
         Charging.AddStateChange("collisionLoss", CollisionLoss);
         Charging.AddGameStateCondition(CollisionWinCond);
         Charging.AddGameStateCondition(CollisionLossCond);
         SpecialActivate.AddStateChange("specialCharge", SpecialCharging);
-        SpecialCharging.AddStateChange("stop", Recovering);
+        SpecialCharging.AddStateChange("stop", Idle);
         SpecialCharging.AddStateChange("collisionWin", CollisionWin);
         SpecialCharging.AddStateChange("collisionLoss", CollisionLoss);
         SpecialCharging.AddGameStateCondition(CollisionWinCond);
         SpecialCharging.AddGameStateCondition(CollisionLossCond);
-        Recovering.AddStateChange("recover", Idle);
-        CollisionWin.AddStateChange("stop", CollisionRecover);
-        CollisionWin.AddStateChange("collision", CollisionRecover);
-        CollisionLoss.AddStateChange("stop", CollisionRecover);
-        CollisionLoss.AddStateChange("collision", CollisionRecover);
-        CollisionRecover.AddStateChange("recover", Idle);
+        CollisionWin.AddStateChange("recover", Idle);
+        CollisionLoss.AddStateChange("recover", Idle);
 
         Ready.AddStateChange("play", Playing);
         Playing.AddStateChange("pause", Paused);
