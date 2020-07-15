@@ -11,6 +11,7 @@ Player prefab component list:
 - Collider of some kind
 - ChargeStatus
 - SpriteRenderer
+- PlayerSprites
 */
 public class Player : GameStateMachine {
     
@@ -19,76 +20,80 @@ public class Player : GameStateMachine {
 
     public const int LEFT = -1;
     public const int RIGHT = 1;
+
+    public const float SPEED = 2.0f;
     public override void Begin() {
         base.Begin();
 
-        GameSystem.SetTimeMultiplier("gameplay", 1.0);
+        GameSystem.SetTimeMultiplier(GameSystem.GAMEPLAY, 1.0);
 
-        IdleState Idle = new IdleState(this.listenerId);
-        MovingForwardState MovingForward = new MovingForwardState(this.listenerId);
-        MovingBackwardState MovingBackward = new MovingBackwardState(this.listenerId);
-        ChargingState Charging = new ChargingState(this.listenerId);
-        SpecialActivateState SpecialActivate = new SpecialActivateState(this.listenerId);
-        SpecialChargingState SpecialCharging = new SpecialChargingState(this.listenerId);
-        CollisionWinCondition CollisionWinCond = new CollisionWinCondition(this.listenerId); 
-        CollisionLossCondition CollisionLossCond = new CollisionLossCondition(this.listenerId); 
-        CollisionWinState CollisionWin = new CollisionWinState(this.listenerId);
-        CollisionLossState CollisionLoss = new CollisionLossState(this.listenerId);
+        IdleState idle = new IdleState(this.listenerId);
+        MovingForwardState movingForward = new MovingForwardState(this.listenerId);
+        MovingBackwardState movingBackward = new MovingBackwardState(this.listenerId);
+        ChargingState charging = new ChargingState(this.listenerId);
+        SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
+        SpecialChargingState specialCharging = new SpecialChargingState(this.listenerId);
+        CollisionWinCondition collisionWinCond = new CollisionWinCondition(this.listenerId); 
+        CollisionLossCondition collisionLossCond = new CollisionLossCondition(this.listenerId); 
+        CollisionWinState collisionWin = new CollisionWinState(this.listenerId);
+        CollisionLossState collisionLoss = new CollisionLossState(this.listenerId);
 
-        PlayerReadyState Ready = new PlayerReadyState(this.listenerId);
-        PlayerPlayingState Playing = new PlayerPlayingState(this.listenerId);
-        PlayerPausedState Paused = new PlayerPausedState(this.listenerId);
-        VictoryState Victory = new VictoryState(this.listenerId);
-        DefeatState Defeat = new DefeatState(this.listenerId);
+        PlayerReadyState ready = new PlayerReadyState(this.listenerId);
+        PlayerPlayingState playing = new PlayerPlayingState(this.listenerId);
+        PlayerPausedState paused = new PlayerPausedState(this.listenerId);
+        VictoryState victory = new VictoryState(this.listenerId);
+        DefeatState defeat = new DefeatState(this.listenerId);
 
-        SpecialActivateCondition SpecialActivateCond = new SpecialActivateCondition(this.listenerId);
+        SpecialActivateCondition specialActivateCond = new SpecialActivateCondition(this.listenerId);
+        DefeatCondition defeatCond = new DefeatCondition(this.listenerId);
 
-        Idle.AddStateChange("moveForward", MovingForward);
-        Idle.AddStateChange("moveBackward", MovingBackward);
-        Idle.AddStateChange("charge", Charging);
-        Idle.AddStateChange("collisionWin", CollisionWin);
-        Idle.AddStateChange("collisionLoss", CollisionLoss);
-        Idle.AddStateChange("specialActivate", SpecialActivate);
-        Idle.AddGameStateCondition(CollisionWinCond);
-        Idle.AddGameStateCondition(CollisionLossCond);
-        Idle.AddGameStateCondition(SpecialActivateCond);
-        MovingForward.AddStateChange("stop", Idle);
-        MovingForward.AddStateChange("moveBackward", MovingBackward);
-        MovingForward.AddStateChange("charge", Charging);
-        MovingForward.AddStateChange("collisionWin", CollisionWin);
-        MovingForward.AddStateChange("collisionLoss", CollisionLoss);
-        MovingForward.AddStateChange("specialActivate", SpecialActivate);
-        MovingForward.AddGameStateCondition(CollisionWinCond);
-        MovingForward.AddGameStateCondition(CollisionLossCond);
-        MovingForward.AddGameStateCondition(SpecialActivateCond);
-        MovingBackward.AddStateChange("stop", Idle);
-        MovingBackward.AddStateChange("moveForward", MovingForward);
-        MovingBackward.AddStateChange("charge", Charging);
-        MovingBackward.AddStateChange("collisionWin", CollisionWin);
-        MovingBackward.AddStateChange("collisionLoss", CollisionLoss);
-        MovingBackward.AddStateChange("specialActivate", SpecialActivate);
-        MovingBackward.AddGameStateCondition(CollisionWinCond);
-        MovingBackward.AddGameStateCondition(CollisionLossCond);
-        MovingBackward.AddGameStateCondition(SpecialActivateCond);
-        Charging.AddStateChange("stop", Idle);
-        Charging.AddStateChange("collisionWin", CollisionWin);
-        Charging.AddStateChange("collisionLoss", CollisionLoss);
-        Charging.AddGameStateCondition(CollisionWinCond);
-        Charging.AddGameStateCondition(CollisionLossCond);
-        SpecialActivate.AddStateChange("specialCharge", SpecialCharging);
-        SpecialCharging.AddStateChange("stop", Idle);
-        SpecialCharging.AddStateChange("collisionWin", CollisionWin);
-        SpecialCharging.AddStateChange("collisionLoss", CollisionLoss);
-        SpecialCharging.AddGameStateCondition(CollisionWinCond);
-        SpecialCharging.AddGameStateCondition(CollisionLossCond);
-        CollisionWin.AddStateChange("recover", Idle);
-        CollisionLoss.AddStateChange("recover", Idle);
+        idle.AddStateChange("moveForward", movingForward);
+        idle.AddStateChange("moveBackward", movingBackward);
+        idle.AddStateChange("charge", charging);
+        idle.AddStateChange("collisionWin", collisionWin);
+        idle.AddStateChange("collisionLoss", collisionLoss);
+        idle.AddStateChange("specialActivate", specialActivate);
+        idle.AddGameStateCondition(collisionWinCond);
+        idle.AddGameStateCondition(collisionLossCond);
+        idle.AddGameStateCondition(specialActivateCond);
+        movingForward.AddStateChange("stop", idle);
+        movingForward.AddStateChange("moveBackward", movingBackward);
+        movingForward.AddStateChange("charge", charging);
+        movingForward.AddStateChange("collisionWin", collisionWin);
+        movingForward.AddStateChange("collisionLoss", collisionLoss);
+        movingForward.AddStateChange("specialActivate", specialActivate);
+        movingForward.AddGameStateCondition(collisionWinCond);
+        movingForward.AddGameStateCondition(collisionLossCond);
+        movingForward.AddGameStateCondition(specialActivateCond);
+        movingBackward.AddStateChange("stop", idle);
+        movingBackward.AddStateChange("moveForward", movingForward);
+        movingBackward.AddStateChange("charge", charging);
+        movingBackward.AddStateChange("collisionWin", collisionWin);
+        movingBackward.AddStateChange("collisionLoss", collisionLoss);
+        movingBackward.AddStateChange("specialActivate", specialActivate);
+        movingBackward.AddGameStateCondition(collisionWinCond);
+        movingBackward.AddGameStateCondition(collisionLossCond);
+        movingBackward.AddGameStateCondition(specialActivateCond);
+        charging.AddStateChange("stop", idle);
+        charging.AddStateChange("collisionWin", collisionWin);
+        charging.AddStateChange("collisionLoss", collisionLoss);
+        charging.AddGameStateCondition(collisionWinCond);
+        charging.AddGameStateCondition(collisionLossCond);
+        specialActivate.AddStateChange("specialCharge", specialCharging);
+        specialCharging.AddStateChange("stop", idle);
+        specialCharging.AddStateChange("collisionWin", collisionWin);
+        specialCharging.AddStateChange("collisionLoss", collisionLoss);
+        specialCharging.AddGameStateCondition(collisionWinCond);
+        specialCharging.AddGameStateCondition(collisionLossCond);
+        collisionWin.AddStateChange("recover", idle);
+        collisionLoss.AddStateChange("recover", idle);
 
-        Ready.AddStateChange("play", Playing);
-        Playing.AddStateChange("pause", Paused);
-        Paused.AddStateChange("play", Playing);
-        Playing.AddStateChange("victory", Victory);
-        Playing.AddStateChange("defeat", Defeat);
+        ready.AddStateChange("play", playing);
+        playing.AddStateChange("pause", paused);
+        playing.AddGameStateCondition(defeatCond);
+        paused.AddStateChange("play", playing);
+        playing.AddStateChange("victory", victory);
+        playing.AddStateChange("defeat", defeat);
 
         this.input = new GameInputState(this.listenerId, 0);
         this.input.SetInputMapping(GameInputState.LEFT_STICK_LEFT_RIGHT, "moveStick");
@@ -97,8 +102,8 @@ public class Player : GameStateMachine {
         this.input.SetInputMapping(GameInputState.START, "start");
 
         this.AddCurrentState(this.input);
-        this.AddCurrentState(Idle);
-        this.AddCurrentState(Ready);
+        this.AddCurrentState(idle);
+        this.AddCurrentState(ready);
     }
 
     public override void Tick() {
@@ -113,7 +118,7 @@ public class Player : GameStateMachine {
         this.direction = i;
     }
 
-    public int GetDirection() {
-        return this.direction;
+    public float GetDirection() {
+        return this.direction * Player.SPEED;
     }
 }
