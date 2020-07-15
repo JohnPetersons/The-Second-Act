@@ -25,6 +25,6 @@ public class GameCamera : MonoBehaviour
         float y = camera.orthographicSize;
         float temp = Math.Abs(right - left);
         float x = Math.Max(temp / 2 - 2.5f, 5);
-        camera.orthographicSize += (x - y) * (((float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * 2.5f));
+        camera.orthographicSize += (x - y) * (((float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * 7.5f));
     }
 }

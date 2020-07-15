@@ -12,6 +12,7 @@ Player prefab component list:
 - ChargeStatus
 - SpriteRenderer
 - PlayerSprites
+- CollisionDistanceFixer
 */
 public class Player : GameStateMachine {
     
@@ -31,6 +32,7 @@ public class Player : GameStateMachine {
         MovingForwardState movingForward = new MovingForwardState(this.listenerId);
         MovingBackwardState movingBackward = new MovingBackwardState(this.listenerId);
         ChargingState charging = new ChargingState(this.listenerId);
+        ChargeRecoveryState chargeRecovery = new ChargeRecoveryState(this.listenerId);
         SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
         SpecialChargingState specialCharging = new SpecialChargingState(this.listenerId);
         CollisionWinCondition collisionWinCond = new CollisionWinCondition(this.listenerId); 
@@ -74,12 +76,21 @@ public class Player : GameStateMachine {
         movingBackward.AddGameStateCondition(collisionWinCond);
         movingBackward.AddGameStateCondition(collisionLossCond);
         movingBackward.AddGameStateCondition(specialActivateCond);
-        charging.AddStateChange("stop", idle);
+        charging.AddStateChange("stop", chargeRecovery);
         charging.AddStateChange("collisionWin", collisionWin);
         charging.AddStateChange("collisionLoss", collisionLoss);
         charging.AddGameStateCondition(collisionWinCond);
         charging.AddGameStateCondition(collisionLossCond);
+        chargeRecovery.AddStateChange("recover", idle);
+        chargeRecovery.AddStateChange("collisionWin", collisionWin);
+        chargeRecovery.AddStateChange("collisionLoss", collisionLoss);
+        chargeRecovery.AddGameStateCondition(collisionWinCond);
+        chargeRecovery.AddGameStateCondition(collisionLossCond);
         specialActivate.AddStateChange("specialCharge", specialCharging);
+        specialActivate.AddStateChange("collisionWin", collisionWin);
+        specialActivate.AddStateChange("collisionLoss", collisionLoss);
+        specialActivate.AddGameStateCondition(collisionWinCond);
+        specialActivate.AddGameStateCondition(collisionLossCond);
         specialCharging.AddStateChange("stop", idle);
         specialCharging.AddStateChange("collisionWin", collisionWin);
         specialCharging.AddStateChange("collisionLoss", collisionLoss);
