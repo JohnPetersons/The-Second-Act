@@ -6,6 +6,9 @@ using GenericUnityGame;
 Player prefab component list:
 - GameEventListenerId
 - Player1 or Player2
+- GameOnTriggerHandler
+- RigidBody with kinematic setting
+- Collider of some kind
 */
 public class Player : GameStateMachine {
     
@@ -68,6 +71,7 @@ public class Player : GameStateMachine {
         CollisionWin.AddStateChange("knockBack", KnockedBack);
         CollisionLoss.AddStateChange("knockBack", KnockedBack);
         KnockedBack.AddStateChange("stop", CollisionRecover);
+        KnockedBack.AddStateChange("collision", CollisionRecover);
         CollisionRecover.AddStateChange("recover", Idle);
 
         Ready.AddStateChange("play", Playing);
@@ -101,7 +105,7 @@ public class Player : GameStateMachine {
     }
 
     public override void HandleGameEvent(GameEvent gameEvent) {
-        if (GameSystem.GetTimeMultiplier("gameplay") > 0) {
+        if (GameSystem.GetTimeMultiplier(GameSystem.GAMEPLAY) > 0) {
             base.HandleGameEvent(gameEvent);
             if (gameEvent.GetName().Equals("moveStick")) {
                 double val = gameEvent.GetGameData<double>() * this.direction;
@@ -114,6 +118,8 @@ public class Player : GameStateMachine {
                 new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
             } else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
                 new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
+            } else if (gameEvent.GetName().Equals("triggerEnter")) {
+                new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
             } else {
                 new TypedGameEvent<bool>(this.GetListenerId(), "idle", true);
             }
