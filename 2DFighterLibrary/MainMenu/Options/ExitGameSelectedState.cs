@@ -8,5 +8,6 @@ public class ExitGameSelectedState : GameState
     public override void Begin() {
         base.Begin();
         Debug.Log("Exit Game Selected");
+        Application.Quit();
     }
 }
