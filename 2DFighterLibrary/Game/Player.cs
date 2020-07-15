@@ -93,7 +93,9 @@ public class Player : GameStateMachine {
     }
 
     public override void Tick() {
-        base.Tick();
+        if (GameSystem.GetTimeMultiplier(GameSystem.GAMEPLAY) > 0) {
+            base.Tick();
+        }
     }
 
     public void SetPlayerNumber(int i) {
