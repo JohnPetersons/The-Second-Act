@@ -134,7 +134,6 @@ public class Player : GameStateMachine {
                 // commented out until I put in specials
                 //new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
             } else if (gameEvent.GetName().Equals("triggerEnter")) {
-                Debug.Log("collision");
                 new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
             }
         }

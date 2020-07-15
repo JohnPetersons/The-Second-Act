@@ -11,6 +11,5 @@ public class DefeatState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Defeat");
     }
 }

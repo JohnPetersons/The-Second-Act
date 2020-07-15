@@ -14,7 +14,6 @@ public class ChargingState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Charging");
     }
     
     public override void Tick() {
@@ -25,6 +24,9 @@ public class ChargingState : GameEventListenerState
 
     public override GameState GetNextState(GameEvent gameEvent) {
         GameState result = base.GetNextState(gameEvent);
+        if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_UP)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
+        }
         if (result != this) {
             this.chargeStatus.SetInactive();
         }

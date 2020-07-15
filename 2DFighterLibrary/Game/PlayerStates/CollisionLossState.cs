@@ -14,7 +14,6 @@ public class CollisionLossState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Collision loss");
         this.timer = 0.5;
     }
 

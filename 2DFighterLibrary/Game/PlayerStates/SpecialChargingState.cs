@@ -11,6 +11,5 @@ public class SpecialChargingState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Special charging");
     }
 }

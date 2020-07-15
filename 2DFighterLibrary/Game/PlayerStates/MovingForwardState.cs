@@ -12,11 +12,18 @@ public class MovingForwardState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Moving Forward");
     }
     
     public override void Tick() {
         base.Tick();
         this.gameObject.transform.Translate(new Vector3(2.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+    }
+
+    public override GameState GetNextState(GameEvent gameEvent) {
+        GameState result = base.GetNextState(gameEvent);
+        if (gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() == 0) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
+        }
+        return result;
     }
 }

@@ -11,6 +11,5 @@ public class SpecialActivateState : GameEventListenerState
 
     public override void Begin() {
         base.Begin();
-        Debug.Log("Special activate");
     }
 }
