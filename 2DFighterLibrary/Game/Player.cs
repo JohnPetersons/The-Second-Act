@@ -9,6 +9,7 @@ Player prefab component list:
 - GameOnTriggerHandler
 - RigidBody with kinematic setting
 - Collider of some kind
+- ChargeStatus
 */
 public class Player : GameStateMachine {
     
@@ -37,6 +38,7 @@ public class Player : GameStateMachine {
 
         GameState Ready = new GameState();
         GameState Playing = new GameState();
+        GameState Paused = new GameState();
         VictoryState Victory = new VictoryState(this.listenerId);
         DefeatState Defeat = new DefeatState(this.listenerId);
 
@@ -75,6 +77,8 @@ public class Player : GameStateMachine {
         CollisionRecover.AddStateChange("recover", Idle);
 
         Ready.AddStateChange("play", Playing);
+        Playing.AddStateChange("pause", Paused);
+        Paused.AddStateChange("play", Playing);
         Playing.AddStateChange("victory", Victory);
         Playing.AddStateChange("defeat", Defeat);
 
