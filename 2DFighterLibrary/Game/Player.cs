@@ -10,6 +10,7 @@ Player prefab component list:
 - RigidBody with kinematic setting
 - Collider of some kind
 - ChargeStatus
+- SpriteRenderer
 */
 public class Player : GameStateMachine {
     
@@ -129,13 +130,12 @@ public class Player : GameStateMachine {
                 }
             } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
                 new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
-            } else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            //} else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
                 // commented out until I put in specials
                 //new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
             } else if (gameEvent.GetName().Equals("triggerEnter")) {
+                Debug.Log("collision");
                 new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
-            } else {
-                new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
             }
         }
     }

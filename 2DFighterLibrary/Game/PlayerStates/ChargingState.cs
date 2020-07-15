@@ -20,7 +20,7 @@ public class ChargingState : GameEventListenerState
     public override void Tick() {
         base.Tick();
         this.chargeStatus.SetActive();
-        this.gameObject.transform.Translate(new Vector3(25.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+        this.gameObject.transform.Translate(new Vector3(5.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
     }
 
     public override GameState GetNextState(GameEvent gameEvent) {

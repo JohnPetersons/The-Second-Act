@@ -10,10 +10,14 @@ public class CollisionWinCondition : GameStateCondition
     }
 
     public override bool CheckCond(GameEvent gameEvent) {
+        Debug.Log("test");
         ChargeStatus me = this.gameObject.GetComponent<ChargeStatus>();
         ChargeStatus other = gameEvent.GetGameData<GameObject>().GetComponent<ChargeStatus>();
+        Debug.Log(me);
+        Debug.Log(other);
         if (me != null && other != null) {
             if (!other.IsActive() || (me.IsActive() && other.GetTurnNumber() > me.GetTurnNumber())) {
+                Debug.Log("test2");
                 return true;
             }
         }
