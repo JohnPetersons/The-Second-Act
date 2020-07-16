@@ -6,6 +6,7 @@ using GenericUnityGame;
 MainMenu prefab component list:
 - GameEventListenerId
 - MainMenu
+- MainMenuSprites
 TODO: Create the following components/things
 - Main menu header
 */

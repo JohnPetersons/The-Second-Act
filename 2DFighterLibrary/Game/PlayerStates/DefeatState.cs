@@ -16,19 +16,13 @@ public class DefeatState : GameEventListenerState
         base.Begin();
         this.timer = 2.99999;
         this.check = 3;
-        Debug.Log(this.GetListenerId() + " loses");
         GameSystem.SetTimeMultiplier(GameSystem.GAMEPLAY, 0.1);
     }
 
     public override void Tick() {
         if (this.timer > 0) {
-            if (this.check > this.timer) {
-                Debug.Log("Main menu in: " + ((int)this.timer + 1));
-                this.check -= 1;
-            }
             this.timer -= GameSystem.GetDeltaTime(Time.deltaTime);
             if (this.timer <= 0) {
-                Debug.Log(LoadScreen.TAG);
                 new TypedGameEvent<string>(LoadScreen.TAG, "fadeOutGame", "mainMenu");
             }
         }

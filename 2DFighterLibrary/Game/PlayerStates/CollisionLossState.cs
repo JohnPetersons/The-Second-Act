@@ -21,7 +21,7 @@ public class CollisionLossState : GameEventListenerState
     public override void Tick() {
         base.Tick();
         if (this.timer2 < 0) {
-            this.gameObject.transform.Translate(new Vector3(-15.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+            this.gameObject.transform.Translate(new Vector3(-12.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
             this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
             if (this.timer < 0) {
                 new TypedGameEvent<bool>(this.GetListenerId(), "recover", true);

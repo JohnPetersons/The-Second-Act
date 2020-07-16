@@ -23,13 +23,15 @@ public class LoadScreen : GameEventListener {
     // Update is called once per frame
     public override void Tick() {
         base.Tick();
-        if (this.fadeInGame && this.opacity > 0.0f) {
+        if (this.fadeInGame && this.opacity > 0) {
             this.opacity -= Time.deltaTime;
             this.renderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
         } else if (!this.fadeInGame && this.opacity < 1.0f) {
             this.opacity += Time.deltaTime;
             this.renderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
             if (this.opacity >= 1.0f) {
+                this.opacity = 1.5f;
+                this.fadeInGame = true;
                 new TypedGameEvent<bool>(GameMaster.TAG, this.loadTarget, true);
             }
             
