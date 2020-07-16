@@ -121,8 +121,8 @@ public class Player : GameStateMachine {
         base.Tick();
     }
 
-    public void SetPlayerNumber(int i) {
-        this.input.SetPlayerNumber(i);
+    public void SetGamepadNumber(int i) {
+        this.input.SetGamepadNumber(i);
     }
 
     public void SetDirection(int i) {

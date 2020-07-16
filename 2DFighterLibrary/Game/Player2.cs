@@ -10,7 +10,7 @@ public class Player2 : Player {
     public override void Begin() {
         base.Begin();
         this.SetListenerId(Player2.TAG);
-        this.SetPlayerNumber(2);
+        this.SetGamepadNumber(2);
         this.SetDirection(Player.LEFT);
     }
 
