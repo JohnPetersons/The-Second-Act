@@ -7,6 +7,5 @@ public class ControlsSelectedState : GameState
 {
     public override void Begin() {
         base.Begin();
-        Debug.Log("Controls Selected");
     }
 }

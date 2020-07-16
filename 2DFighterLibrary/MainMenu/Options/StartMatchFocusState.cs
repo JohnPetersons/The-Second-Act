@@ -7,6 +7,5 @@ public class StartMatchFocusState : GameState
 {
     public override void Begin() {
         base.Begin();
-        Debug.Log("Start Match Focus");
     }
 }

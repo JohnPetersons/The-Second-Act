@@ -10,8 +10,8 @@ public class DefeatCondition : GameStateCondition
     }
 
     public override bool CheckCond(GameEvent gameEvent) {
-        ChargeStatus other = gameEvent.GetGameData<GameObject>().GetComponent<ChargeStatus>();
-        if (other == null) {
+        EndZone other = gameEvent.GetGameData<GameObject>().GetComponent<EndZone>();
+        if (other != null) {
             new TypedGameEvent<bool>(this.sendTo.GetListenerId(), "defeat", true);
             new TypedGameEvent<bool>(Player1.TAG, "victory", true);
             new TypedGameEvent<bool>(Player2.TAG, "victory", true);

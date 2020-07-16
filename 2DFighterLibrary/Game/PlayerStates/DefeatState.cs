@@ -21,13 +21,16 @@ public class DefeatState : GameEventListenerState
     }
 
     public override void Tick() {
-        if (this.check > this.timer) {
-            Debug.Log("Main menu in: " + ((int)this.timer + 1));
-            this.check -= 1;
-        }
-        this.timer -= GameSystem.GetDeltaTime(Time.deltaTime);
-        if (this.timer <= 0) {
-            new TypedGameEvent<bool>(GameMaster.TAG, "mainMenu", true);
+        if (this.timer > 0) {
+            if (this.check > this.timer) {
+                Debug.Log("Main menu in: " + ((int)this.timer + 1));
+                this.check -= 1;
+            }
+            this.timer -= GameSystem.GetDeltaTime(Time.deltaTime);
+            if (this.timer <= 0) {
+                Debug.Log(LoadScreen.TAG);
+                new TypedGameEvent<string>(LoadScreen.TAG, "fadeOutGame", "mainMenu");
+            }
         }
     }
 }

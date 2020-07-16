@@ -7,6 +7,5 @@ public class ExitGameFocusState : GameState
 {
     public override void Begin() {
         base.Begin();
-        Debug.Log("Exit Game Focus");
     }
 }
