@@ -6,7 +6,7 @@ using GenericUnityGame;
 
 public class LoadScreen : GameEventListener {
     private float opacity;
-    private SpriteRenderer renderer;
+    private SpriteRenderer spriteRenderer;
     public const string TAG = "loadScreen";
     private bool fadeInGame;
     private string loadTarget;
@@ -15,7 +15,7 @@ public class LoadScreen : GameEventListener {
         base.Begin();
         this.SetListenerId(LoadScreen.TAG);
         this.opacity = 1.5f;
-        this.renderer = this.gameObject.GetComponent<SpriteRenderer>();
+        this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         this.fadeInGame = true;
         this.loadTarget = "";
     }
@@ -25,10 +25,10 @@ public class LoadScreen : GameEventListener {
         base.Tick();
         if (this.fadeInGame && this.opacity > 0) {
             this.opacity -= Time.deltaTime;
-            this.renderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
+            this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
         } else if (!this.fadeInGame && this.opacity < 1.0f) {
             this.opacity += Time.deltaTime;
-            this.renderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
+            this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
             if (this.opacity >= 1.0f) {
                 this.opacity = 1.5f;
                 this.fadeInGame = true;

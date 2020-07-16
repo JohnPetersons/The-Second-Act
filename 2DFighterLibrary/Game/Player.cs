@@ -8,7 +8,7 @@ Player prefab component list:
 - Player1 or Player2
 - GameOnTriggerHandler
 - RigidBody with kinematic setting
-- Collider of some kind
+- PolygonCollider2D
 - ChargeStatus
 - SpriteRenderer
 - PlayerSprites

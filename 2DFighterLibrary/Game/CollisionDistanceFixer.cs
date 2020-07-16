@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using GenericUnityGame;
 
+/*
+Only for the player prefabs, fixes the collision distance between them so they stop when they would have collided.
+No overlap
+*/
 public class CollisionDistanceFixer : GameEventListener
 {
-    public double previousX, previousX2;
+    private double previousX, previousX2, edge;
     public override void Begin() {
         base.Begin();
-        previousX = previousX2 = this.gameObject.transform.position.x;
+        this.previousX = this.previousX2 = this.gameObject.transform.position.x;
+        this.edge = 0.5;
     }
 
     public override void Tick() {
@@ -26,6 +31,14 @@ public class CollisionDistanceFixer : GameEventListener
         }
     }
 
+    public void SetEdge(double d) {
+        this.edge = d;
+    }
+
+    public double GetEdge() {
+        return this.edge;
+    }
+
     public override void HandleGameEvent(GameEvent gameEvent) {
         base.Tick();
         if (gameEvent.GetName().Equals("collision")) {
@@ -33,8 +46,10 @@ public class CollisionDistanceFixer : GameEventListener
             CollisionDistanceFixer fixer = go.GetComponent<CollisionDistanceFixer>();
             if (fixer != null) {
                 double total = Math.Abs(fixer.GetVelocity()) + Math.Abs(this.GetVelocity());
-                float distance = 1 - Vector3.Distance(this.transform.position, go.transform.position);
-                new TypedGameEvent<double>(this.GetListenerId(), "fixCollision", -1 * distance * ((this.GetVelocity() / total)));
+                float distance = (float)(this.GetEdge() + fixer.GetEdge()) - Vector3.Distance(this.transform.position, go.transform.position);
+                if (total != 0) {
+                    new TypedGameEvent<double>(this.GetListenerId(), "fixCollision", -1 * distance * ((this.GetVelocity() / total)));
+                }
             }
         } else if (gameEvent.GetName().Equals("fixCollision")) {
             this.transform.Translate(new Vector3((float)gameEvent.GetGameData<double>(), 0, 0));

@@ -7,7 +7,6 @@ public class DefeatState : GameEventListenerState
 {
 
     private double timer;
-    private int check;
     public DefeatState(GameEventListenerId listenerId): base(listenerId) {
 
     }
@@ -15,7 +14,6 @@ public class DefeatState : GameEventListenerState
     public override void Begin() {
         base.Begin();
         this.timer = 2.99999;
-        this.check = 3;
         GameSystem.SetTimeMultiplier(GameSystem.GAMEPLAY, 0.1);
     }
 

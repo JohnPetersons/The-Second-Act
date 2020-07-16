@@ -8,11 +8,11 @@ public class PlayerSprites : GameSpriteStateMachine
     public override void Begin() {
         base.Begin();
 
-        GameSpriteState idleSprite1 = new GameSpriteState(this.listenerId, "PlayerIdle1");
-        GameSpriteState idleSprite2 = new GameSpriteState(this.listenerId, "PlayerIdle2");
-        GameSpriteState chargeSprite = new GameSpriteState(this.listenerId, "DefaultTempPlayerCharge");
-        GameSpriteState winCollisionSprite = new GameSpriteState(this.listenerId, "DefaultTempPlayerWinCollision");
-        GameSpriteState loseCollisionSprite = new GameSpriteState(this.listenerId, "DefaultTempPlayerLoseCollision");
+        PlayerSpriteState idleSprite1 = new PlayerSpriteState(this.listenerId, "PlayerIdle1");
+        PlayerSpriteState idleSprite2 = new PlayerSpriteState(this.listenerId, "PlayerIdle2");
+        PlayerSpriteState chargeSprite = new PlayerSpriteState(this.listenerId, "DefaultTempPlayerCharge");
+        PlayerSpriteState winCollisionSprite = new PlayerSpriteState(this.listenerId, "DefaultTempPlayerWinCollision");
+        PlayerSpriteState loseCollisionSprite = new PlayerSpriteState(this.listenerId, "DefaultTempPlayerLoseCollision");
 
         idleSprite1.SetTimedSpriteStateChange(idleSprite2, 0.75);
         idleSprite2.SetTimedSpriteStateChange(idleSprite1, 0.75);
