@@ -21,13 +21,24 @@ public class PlayerSprites : GameSpriteStateMachine
             new Vector2(-0.5f, -0.5f),
             new Vector2(-0.5f, 0.5f)};
 
-        PlayerSpriteState idleSprite1 = new PlayerSpriteState(this.listenerId, "PlayerIdle1");
-        PlayerSpriteState idleSprite2 = new PlayerSpriteState(this.listenerId, "PlayerIdle2");
+        PlayerSpriteState idleSprite;
         PlayerSpriteState walkingSprite;
         if (dir > 0) {
+            idleSprite = new PlayerSpriteState(this.listenerId, "Player/LookingRight/Idle/idle1", 0.15, walkingSprite1ColliderRight, dir);
+            idleSprite.AddSequencedSprite("Player/LookingRight/Idle/idle2", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingRight/Idle/idle3", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingRight/Idle/idle4", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingRight/Idle/idle5", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingRight/Idle/idle6", 0.15);
             walkingSprite = new PlayerSpriteState(this.listenerId, "Player/LookingRight/Walking/walking1", 0.15, walkingSprite1ColliderRight, dir);
             walkingSprite.AddSequencedSprite("Player/LookingRight/Walking/walking3", 0.15);
         } else {
+            idleSprite = new PlayerSpriteState(this.listenerId, "Player/LookingLeft/Idle/idle1", 0.15, walkingSprite1ColliderLeft, dir);
+            idleSprite.AddSequencedSprite("Player/LookingLeft/Idle/idle2", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingLeft/Idle/idle3", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingLeft/Idle/idle4", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingLeft/Idle/idle5", 0.15);
+            idleSprite.AddSequencedSprite("Player/LookingLeft/Idle/idle6", 0.15);
             walkingSprite = new PlayerSpriteState(this.listenerId, "Player/LookingLeft/Walking/walking1", 0.15, walkingSprite1ColliderLeft, dir);
             walkingSprite.AddSequencedSprite("Player/LookingLeft/Walking/walking3", 0.15);
         }
@@ -35,28 +46,21 @@ public class PlayerSprites : GameSpriteStateMachine
         PlayerSpriteState winCollisionSprite = new PlayerSpriteState(this.listenerId, "DefaultTempPlayerWinCollision");
         PlayerSpriteState loseCollisionSprite = new PlayerSpriteState(this.listenerId, "DefaultTempPlayerLoseCollision");
 
-        idleSprite1.SetTimedSpriteStateChange(idleSprite2, 0.75);
-        idleSprite2.SetTimedSpriteStateChange(idleSprite1, 0.75);
-
-        idleSprite1.AddStateChange("charge", chargeSprite);
-        idleSprite2.AddStateChange("charge", chargeSprite);
-        idleSprite1.AddStateChange("moveForward", walkingSprite);
-        idleSprite2.AddStateChange("moveForward", walkingSprite);
-        walkingSprite.AddStateChange("stop", idleSprite1);
-        walkingSprite.AddStateChange("moveBackward", idleSprite1);
+        idleSprite.AddStateChange("charge", chargeSprite);
+        idleSprite.AddStateChange("moveForward", walkingSprite);
+        walkingSprite.AddStateChange("stop", idleSprite);
+        walkingSprite.AddStateChange("moveBackward", idleSprite);
         walkingSprite.AddStateChange("charge", chargeSprite);
         walkingSprite.AddStateChange("collisionWin", winCollisionSprite);
         walkingSprite.AddStateChange("collisionLoss", loseCollisionSprite);
-        idleSprite1.AddStateChange("collisionWin", winCollisionSprite);
-        idleSprite2.AddStateChange("collisionWin", winCollisionSprite);
-        idleSprite1.AddStateChange("collisionLoss", loseCollisionSprite);
-        idleSprite2.AddStateChange("collisionLoss", loseCollisionSprite);
+        idleSprite.AddStateChange("collisionWin", winCollisionSprite);
+        idleSprite.AddStateChange("collisionLoss", loseCollisionSprite);
         chargeSprite.AddStateChange("stop", loseCollisionSprite);
         chargeSprite.AddStateChange("collisionWin", winCollisionSprite);
         chargeSprite.AddStateChange("collisionLoss", loseCollisionSprite);
-        winCollisionSprite.AddStateChange("recover", idleSprite1);
-        loseCollisionSprite.AddStateChange("recover", idleSprite1);
+        winCollisionSprite.AddStateChange("recover", idleSprite);
+        loseCollisionSprite.AddStateChange("recover", idleSprite);
         
-        this.AddCurrentState(idleSprite1);
+        this.AddCurrentState(idleSprite);
     }
 }
