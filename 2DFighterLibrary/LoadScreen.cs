@@ -26,7 +26,10 @@ public class LoadScreen : GameEventListener {
         if (this.fadeInGame && this.opacity > 0) {
             this.opacity -= Time.deltaTime;
             this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
-        } else if (!this.fadeInGame && this.opacity < 1.0f) {
+            if (this.opacity <= 0.0f) {
+                new TypedGameEvent<bool>(GameMaster.TAG, "loaded", true);
+            }
+        } else if (!this.fadeInGame && this.opacity < 1.6f) {
             this.opacity += Time.deltaTime;
             this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Min(1.0f, this.opacity));
             if (this.opacity >= 1.0f) {

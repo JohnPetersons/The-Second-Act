@@ -13,8 +13,22 @@ public class PlayerSpriteState : GamePolygonColliderSpriteState
         this.edge = 0.5;
         this.fixer = this.gameObject.GetComponent<CollisionDistanceFixer>();
     }
+    public PlayerSpriteState(GameEventListenerId listenerId, string spriteName, double firstSequenceLength): base(listenerId, spriteName, firstSequenceLength) {
+        this.edge = 0.5;
+        this.fixer = this.gameObject.GetComponent<CollisionDistanceFixer>();
+    }
 
     public PlayerSpriteState(GameEventListenerId listenerId, string spriteName, Vector2[] colliderPoints, int direction): base(listenerId, spriteName, colliderPoints) {
+        this.fixer = this.gameObject.GetComponent<CollisionDistanceFixer>();
+        this.edge = 0;
+        foreach(Vector2 point in colliderPoints) {
+            if (Math.Sign(point.x) == Math.Sign(direction) && Math.Abs(point.x) > this.edge) {
+                this.edge = Math.Abs(point.x);
+            }
+        }
+    }
+
+    public PlayerSpriteState(GameEventListenerId listenerId, string spriteName, double firstSequenceLength, Vector2[] colliderPoints, int direction): base(listenerId, spriteName, firstSequenceLength, colliderPoints) {
         this.fixer = this.gameObject.GetComponent<CollisionDistanceFixer>();
         this.edge = 0;
         foreach(Vector2 point in colliderPoints) {

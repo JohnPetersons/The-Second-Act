@@ -14,10 +14,13 @@ public class MainMenu : GameStateMachine {
     
     private double focusChangeTimerDefault, focusChangeTimer;
     public const string TAG = "mainMenu";
+    private bool loaded;
 
     public override void Begin() {
         base.Begin();
         this.SetListenerId(MainMenu.TAG);
+        this.ListenTo(GameMaster.TAG);
+        this.loaded = false;
         GameSystem.SetTimeMultiplier(MainMenu.TAG, 1.0);
 
         StartMatchFocusState startMatchFocus = new StartMatchFocusState();
@@ -51,20 +54,25 @@ public class MainMenu : GameStateMachine {
 
     public override void HandleGameEvent(GameEvent gameEvent) {
         base.HandleGameEvent(gameEvent);
-        if (gameEvent.GetName().Equals("select") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-            new TypedGameEvent<bool>(this.GetListenerId(), "selected", true);
-        } else if (this.focusChangeTimer <= 0) {
-            if (gameEvent.GetName().Equals("leftStick")) {
-                if (gameEvent.GetGameData<double>() == -1) {
-                    this.focusChangeTimer = this.focusChangeTimerDefault;
-                    new TypedGameEvent<bool>(this.GetListenerId(), "up", true);
-                } else if (gameEvent.GetGameData<double>() == 1) {
-                    this.focusChangeTimer = this.focusChangeTimerDefault;
-                    new TypedGameEvent<bool>(this.GetListenerId(), "down", true);
+        if (this.loaded) {
+            if (gameEvent.GetName().Equals("select") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+                new TypedGameEvent<bool>(this.GetListenerId(), "selected", true);
+            } else if (this.focusChangeTimer <= 0) {
+                if (gameEvent.GetName().Equals("leftStick")) {
+                    if (gameEvent.GetGameData<double>() == -1) {
+                        this.focusChangeTimer = this.focusChangeTimerDefault;
+                        new TypedGameEvent<bool>(this.GetListenerId(), "up", true);
+                    } else if (gameEvent.GetGameData<double>() == 1) {
+                        this.focusChangeTimer = this.focusChangeTimerDefault;
+                        new TypedGameEvent<bool>(this.GetListenerId(), "down", true);
+                    }
                 }
+            } else {
+                this.focusChangeTimer -= GameSystem.GetDeltaTime(MainMenu.TAG, Time.deltaTime);
             }
-        } else {
-            this.focusChangeTimer -= GameSystem.GetDeltaTime(MainMenu.TAG, Time.deltaTime);
+        } else if (gameEvent.GetName().Equals("loaded")) {
+            this.loaded = true;
         }
+        
     }
 }
