@@ -25,6 +25,11 @@ public class MainMenu : GameStateMachine {
 
         StartMatchFocusState startMatchFocus = new StartMatchFocusState();
         StartMatchSelectedState startMatchSelected = new StartMatchSelectedState();
+
+        // TODO
+        GameState multiplayerFocus = new GameState();
+        GameState multiplayerSelected = new GameState();
+
         ControlsFocusState controlsFocus = new ControlsFocusState();
         ControlsSelectedState controlsSelected = new ControlsSelectedState();
         ExitGameFocusState exitGameFocus = new ExitGameFocusState();

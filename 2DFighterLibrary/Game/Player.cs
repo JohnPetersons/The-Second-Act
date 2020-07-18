@@ -13,6 +13,8 @@ Player prefab component list:
 - SpriteRenderer
 - PlayerSprites
 - CollisionDistanceFixer
+- NetworkIdentity
+- NetworkTransform
 */
 public class Player : GameStateMachine {
     
