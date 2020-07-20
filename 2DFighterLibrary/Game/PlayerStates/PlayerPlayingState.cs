@@ -25,6 +25,12 @@ public class PlayerPlayingState: GameEventListenerState
             }
         } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
+        } else if (gameEvent.GetName().Equals("quickStepButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "quickStep", true);
+        } else if (gameEvent.GetName().Equals("dashButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "dashCharge", true);
+        } else if (gameEvent.GetName().Equals("feintButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+            new TypedGameEvent<bool>(this.GetListenerId(), "feint", true);
         //} else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             // commented out until I put in specials
             //new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
