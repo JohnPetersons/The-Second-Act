@@ -11,11 +11,11 @@ public class Countdown : GameSpriteStateMachine
         base.Begin();
         this.listenerId.SetListenerId(Countdown.TAG);
 
-        GameSpriteState defaultSprite = new GameSpriteState(this.listenerId, "DefaultTempPlayer");
-        GameSpriteState sprite3 = new GameSpriteState(this.listenerId, "Countdown3");
-        GameSpriteState sprite2 = new GameSpriteState(this.listenerId, "Countdown2");
-        GameSpriteState sprite1 = new GameSpriteState(this.listenerId, "Countdown1");
-        GameSpriteState spriteGO = new GameSpriteState(this.listenerId, "CountdownGO");
+        GameSpriteState defaultSprite = new GameSpriteState(this.listenerId, "Ready321GO/Ready");
+        GameSpriteState sprite3 = new GameSpriteState(this.listenerId, "Ready321GO/Countdown3");
+        GameSpriteState sprite2 = new GameSpriteState(this.listenerId, "Ready321GO/Countdown2");
+        GameSpriteState sprite1 = new GameSpriteState(this.listenerId, "Ready321GO/Countdown1");
+        GameSpriteState spriteGO = new GameSpriteState(this.listenerId, "Ready321GO/CountdownGO");
 
         defaultSprite.AddStateChange("3", sprite3);
         sprite3.AddStateChange("2", sprite2);

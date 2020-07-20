@@ -9,12 +9,12 @@ public class MainMenuSprites : GameSpriteStateMachine
     public override void Begin() {
         base.Begin();
 
-        GameSpriteState startMatchFocus = new GameSpriteState(this.listenerId, "StartMatchFocus");
-        GameSpriteState startMatchSelected = new GameSpriteState(this.listenerId, "StartMatchSelected");
-        GameSpriteState controlsFocus = new GameSpriteState(this.listenerId, "ControlsFocus");
-        GameSpriteState controlsSelected = new GameSpriteState(this.listenerId, "ControlsSelected");
-        GameSpriteState exitGameFocus = new GameSpriteState(this.listenerId, "ExitGameFocus");
-        GameSpriteState exitGameSelected = new GameSpriteState(this.listenerId, "ExitGameSelected");
+        GameSpriteState startMatchFocus = new GameSpriteState(this.listenerId, "MainMenu/StartMatchFocus");
+        GameSpriteState startMatchSelected = new GameSpriteState(this.listenerId, "MainMenu/StartMatchSelected");
+        GameSpriteState controlsFocus = new GameSpriteState(this.listenerId, "MainMenu/ControlsFocus");
+        GameSpriteState controlsSelected = new GameSpriteState(this.listenerId, "MainMenu/ControlsSelected");
+        GameSpriteState exitGameFocus = new GameSpriteState(this.listenerId, "MainMenu/ExitGameFocus");
+        GameSpriteState exitGameSelected = new GameSpriteState(this.listenerId, "MainMenu/ExitGameSelected");
 
         startMatchFocus.AddStateChange("down", controlsFocus);
         startMatchFocus.AddStateChange("selected", startMatchSelected);
