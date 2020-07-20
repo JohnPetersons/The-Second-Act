@@ -17,6 +17,26 @@ public class CollisionWinState : GameEventListenerState
         base.Begin();
         this.timer = 0.5;
         this.timer2 = 0.5;
+        GameLoader loader = new GameLoader();
+        if (this.GetListenerId().Equals(Player1.TAG)) {
+            loader.Load("CollisionEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+            loader.Load("SparkEffect,0,0,-20");
+        }
     }
 
     public override void Tick() {

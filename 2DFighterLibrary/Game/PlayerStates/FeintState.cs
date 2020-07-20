@@ -6,12 +6,11 @@ using GenericUnityGame;
 public class FeintState : GameEventListenerState
 {
     private Player player;
-    private double timer1, timer2, timer;
+    private double timer1, timer;
     private bool canMove;
     public FeintState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
         this.timer1 = 1;
-        this.timer2 = 0.9;
     }
 
     public override void Begin() {

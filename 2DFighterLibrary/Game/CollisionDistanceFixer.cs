@@ -11,16 +11,26 @@ No overlap
 public class CollisionDistanceFixer : GameEventListener
 {
     private double previousX, previousX2, edge;
+    private double timer, effectTimer;
+    private GameLoader loader;
     public override void Begin() {
         base.Begin();
         this.previousX = this.previousX2 = this.gameObject.transform.position.x;
         this.edge = 0.5;
+        this.timer = 0.025;
+        this.effectTimer = 0.025;
+        this.loader = new GameLoader();
     }
 
     public override void Tick() {
         base.Tick();
         previousX2 = previousX;
         previousX = this.gameObject.transform.position.x;
+        if (this.timer <= 0) {
+            loader.Load("DustEffect," + this.transform.position.x + ",0,-3");
+            this.timer = this.effectTimer;
+        }
+        this.timer -= Math.Abs(previousX - previousX2) * (Math.Abs(previousX - previousX2) / 2);
     }
 
     public double GetVelocity() {
@@ -54,5 +64,10 @@ public class CollisionDistanceFixer : GameEventListener
         } else if (gameEvent.GetName().Equals("fixCollision")) {
             this.transform.Translate(new Vector3((float)gameEvent.GetGameData<double>(), 0, 0));
         }
+    }
+
+    public override void OnDestroy() {
+        base.OnDestroy();
+        this.loader.RemoveLoaded();
     }
 }
