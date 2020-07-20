@@ -33,13 +33,11 @@ public class Player : GameStateMachine {
         IdleState idle = new IdleState(this.listenerId);
         MovingForwardState movingForward = new MovingForwardState(this.listenerId);
         MovingBackwardState movingBackward = new MovingBackwardState(this.listenerId);
-
         QuickStepForwardState quickStepForward = new QuickStepForwardState(this.listenerId);
         QuickStepBackwardState quickStepBackward = new QuickStepBackwardState(this.listenerId);
         DashChargingState dashCharging = new DashChargingState(this.listenerId);
         DashState dash = new DashState(this.listenerId);
         FeintState feint = new FeintState(this.listenerId);
-
         ChargingState charging = new ChargingState(this.listenerId);
         ChargeRecoveryState chargeRecovery = new ChargeRecoveryState(this.listenerId);
         SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
@@ -141,7 +139,6 @@ public class Player : GameStateMachine {
         chargeRecovery.AddStateChange("collisionLoss", collisionLoss);
         chargeRecovery.AddGameStateCondition(collisionWinCond);
         chargeRecovery.AddGameStateCondition(collisionLossCond);
-
         specialActivate.AddStateChange("specialCharge", specialCharging);
         specialActivate.AddStateChange("collisionWin", collisionWin);
         specialActivate.AddStateChange("collisionLoss", collisionLoss);
@@ -152,7 +149,6 @@ public class Player : GameStateMachine {
         specialCharging.AddStateChange("collisionLoss", collisionLoss);
         specialCharging.AddGameStateCondition(collisionWinCond);
         specialCharging.AddGameStateCondition(collisionLossCond);
-
         collisionWin.AddStateChange("recover", idle);
         collisionLoss.AddStateChange("recover", idle);
 
