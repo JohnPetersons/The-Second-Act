@@ -11,7 +11,7 @@ public class ChargeRecoveryState : GameEventListenerState
     }
 
     public override void Begin() {
-        this.timer = 0.25;
+        this.timer = 0.5;
     }
 
     public override void Tick() {

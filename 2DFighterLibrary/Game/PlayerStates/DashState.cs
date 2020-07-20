@@ -22,7 +22,7 @@ public class DashState : GameEventListenerState
     
     public override void Tick() {
         base.Tick();
-        this.gameObject.transform.Translate(new Vector3(60.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+        this.gameObject.transform.Translate(new Vector3(45.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         if (this.timer <= 0) {
             new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
         }
