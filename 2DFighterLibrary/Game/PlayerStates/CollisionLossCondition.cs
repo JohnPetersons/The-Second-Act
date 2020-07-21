@@ -13,7 +13,7 @@ public class CollisionLossCondition : GameStateCondition
         ChargeStatus me = this.gameObject.GetComponent<ChargeStatus>();
         ChargeStatus other = gameEvent.GetGameData<GameObject>().GetComponent<ChargeStatus>();
         if (me != null && other != null) {
-            if (!me.IsActive() || (other.IsActive() && other.GetTurnNumber() > me.GetTurnNumber())) {
+            if (other.GetTurnNumber() < me.GetTurnNumber()) {
                 return true;
             }
         }

@@ -34,6 +34,9 @@ public class ChargeStatus : GameEventListener
     }
 
     public int GetTurnNumber() {
+        if (!this.IsActive()) {
+            return this.turnNumber;
+        }
         return this.myTurnNumber;
     }
 }

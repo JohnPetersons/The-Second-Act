@@ -7,7 +7,7 @@ public class ChargeRecoveryState : GameEventListenerState
 {
     private double timer;
     public ChargeRecoveryState(GameEventListenerId listenerId): base(listenerId) {
-        
+
     }
 
     public override void Begin() {

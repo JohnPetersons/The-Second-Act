@@ -123,7 +123,9 @@ public class PlayerSprites : GameSpriteStateMachine
         feintSprite.AddStateChange("collisionWin", winCollisionSprite);
         feintSprite.AddStateChange("collisionLoss", loseCollisionSprite);
         winCollisionSprite.AddStateChange("recover", idleSprite);
+        winCollisionSprite.AddStateChange("collisionLoss", loseCollisionSprite);
         loseCollisionSprite.AddStateChange("recover", idleSprite);
+        loseCollisionSprite.AddStateChange("collisionWin", winCollisionSprite);
         
         this.AddCurrentState(idleSprite);
     }

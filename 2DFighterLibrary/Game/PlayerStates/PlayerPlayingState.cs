@@ -23,7 +23,8 @@ public class PlayerPlayingState: GameEventListenerState
             } else if (val < 0) {
                 new TypedGameEvent<bool>(this.GetListenerId(), "moveBackward", true);
             }
-        } else if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
+        } else if (gameEvent.GetName().Equals("chargeButton") && (gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN) ||
+            gameEvent.GetGameData<string>().Equals(GameInputState.KEY_HELD))) {
             new TypedGameEvent<bool>(this.GetListenerId(), "charge", true);
         } else if (gameEvent.GetName().Equals("quickStepButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             new TypedGameEvent<bool>(this.GetListenerId(), "quickStep", true);
