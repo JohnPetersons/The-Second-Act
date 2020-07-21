@@ -27,7 +27,7 @@ public class CollisionDistanceFixer : GameEventListener
         previousX2 = previousX;
         previousX = this.gameObject.transform.position.x;
         if (this.timer <= 0) {
-            loader.Load("DustEffect," + this.transform.position.x + ",0,-3");
+            //GameSystem.GetGameData<GameLoader>("GameLoader").Load("DustEffect," + this.transform.position.x + ",0,-3");
             this.timer = this.effectTimer;
         }
         this.timer -= Math.Abs(previousX - previousX2) * (Math.Abs(previousX - previousX2) / 2);

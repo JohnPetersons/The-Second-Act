@@ -18,7 +18,7 @@ public class CollisionWinState : GameEventListenerState
         this.timer = 0.5;
         this.timer2 = 0.5;
         this.timer3 = 0.5;
-        GameLoader loader = new GameLoader();
+        GameLoader loader = GameSystem.GetGameData<GameLoader>("GameLoader");
         if (this.GetListenerId().Equals(Player1.TAG)) {
             loader.Load("CollisionEffect,0,0,-20");
             loader.Load("SparkEffect,0,0,-20");
@@ -46,7 +46,7 @@ public class CollisionWinState : GameEventListenerState
             this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else if (this.timer2 > 0) {
             this.timer2 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
-            this.gameObject.transform.Translate(new Vector3(-2.5f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+            this.gameObject.transform.Translate(new Vector3(Settings.collisionWin * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         } else if (this.timer3 > 0) {
             this.timer3 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else {

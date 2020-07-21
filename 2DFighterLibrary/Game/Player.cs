@@ -23,8 +23,6 @@ public class Player : GameStateMachine {
 
     public const int LEFT = -1;
     public const int RIGHT = 1;
-
-    public const float SPEED = 1.0f;
     public override void Begin() {
         base.Begin();
 
@@ -185,6 +183,6 @@ public class Player : GameStateMachine {
     }
 
     public float GetDirection() {
-        return this.direction * Player.SPEED;
+        return this.direction * Settings.gameSpeed;
     }
 }

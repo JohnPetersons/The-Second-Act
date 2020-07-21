@@ -10,7 +10,7 @@ public class FeintState : GameEventListenerState
     private bool canMove;
     public FeintState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
-        this.timer1 = 1;
+        this.timer1 = Settings.dashChargeTimer;
     }
 
     public override void Begin() {

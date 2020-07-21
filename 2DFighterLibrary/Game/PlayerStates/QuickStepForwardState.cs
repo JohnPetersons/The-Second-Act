@@ -10,8 +10,8 @@ public class QuickStepForwardState : GameEventListenerState
     private bool spriteChanged;
     public QuickStepForwardState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
-        this.timer1 = 1;
-        this.timer2 = 0.9;
+        this.timer1 = Settings.quickStepForwardTimer1 + Settings.quickStepForwardTimer2;
+        this.timer2 = Settings.quickStepForwardTimer2;
     }
 
     public override void Begin() {
@@ -23,7 +23,7 @@ public class QuickStepForwardState : GameEventListenerState
     public override void Tick() {
         base.Tick();
         if (this.timer > timer2) {
-            this.gameObject.transform.Translate(new Vector3(40.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+            this.gameObject.transform.Translate(new Vector3(Settings.quickStepForward * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         } else if (this.timer <= timer2) {
             if (!this.spriteChanged) {
                 new TypedGameEvent<bool>(this.GetListenerId() + GameSpriteStateMachine.SPRITE_LISTENER_SUFFIX, "stop", true);

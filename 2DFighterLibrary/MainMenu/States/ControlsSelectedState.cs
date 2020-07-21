@@ -7,5 +7,7 @@ public class ControlsSelectedState : GameState
 {
     public override void Begin() {
         base.Begin();
+        GameSystem.GetGameData<GameLoader>("MenuLoader").LoadFile("SettingsMenu");
+        new TypedGameEvent<bool>(MainMenu.TAG, "subMenu", true);
     }
 }

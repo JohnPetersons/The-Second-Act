@@ -16,7 +16,7 @@ public class MovingBackwardState : GameEventListenerState
     
     public override void Tick() {
         base.Tick();
-        this.gameObject.transform.Translate(new Vector3(-2.5f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+        this.gameObject.transform.Translate(new Vector3(Settings.moveBackward * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
     }
 
     public override GameState GetNextState(GameEvent gameEvent) {

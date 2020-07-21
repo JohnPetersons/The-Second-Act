@@ -44,7 +44,7 @@ public class SparkEffect : MonoBehaviour
         this.scale += (float)(GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.grow);
         this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Max(0.0f, this.opacity));
         this.transform.localScale = new Vector3(this.scale, this.scale, 1);
-        if (GameSystem.GetGameData<GameObject>(Player1.TAG) == null || this.transform.position.y - this.scale / 2.0f <= -0.5f) {
+        if (this.transform.position.y - this.scale / 2.0f <= -0.5f) {
             GameObject.Destroy(this.gameObject);
         }
     }

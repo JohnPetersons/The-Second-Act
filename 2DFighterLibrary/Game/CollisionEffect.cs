@@ -29,7 +29,7 @@ public class CollisionEffect : MonoBehaviour
         this.scale += (float)(GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * 2.0);
         this.spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, Math.Max(0.0f, this.opacity));
         this.transform.localScale = new Vector3(this.scale, this.scale, 1);
-        if (this.opacity <= 0 || GameSystem.GetGameData<GameObject>(Player1.TAG) == null) {
+        if (this.opacity <= 0) {
             GameObject.Destroy(this.gameObject);
         }
     }

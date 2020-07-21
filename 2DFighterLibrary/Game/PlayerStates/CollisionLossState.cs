@@ -25,7 +25,7 @@ public class CollisionLossState : GameEventListenerState
             this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else if (this.timer2 > 0) {
             this.timer2 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
-            this.gameObject.transform.Translate(new Vector3(-12.0f * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+            this.gameObject.transform.Translate(new Vector3(Settings.collisionLoss * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         } else if (this.timer3 > 0) {
             this.timer3 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else {
