@@ -24,8 +24,8 @@ public class MainMenu : GameStateMachine {
         StartMatchSelectedState startMatchSelected = new StartMatchSelectedState();
 
         // TODO
-        ControlsFocusState settingsFocus = new ControlsFocusState();
-        ControlsSelectedState settingsSelected = new ControlsSelectedState();
+        SettingsFocusState settingsFocus = new SettingsFocusState();
+        SettingsSelectedState settingsSelected = new SettingsSelectedState();
 
         ControlsFocusState controlsFocus = new ControlsFocusState();
         ControlsSelectedState controlsSelected = new ControlsSelectedState();
@@ -36,7 +36,7 @@ public class MainMenu : GameStateMachine {
         MainMenuInputState mainMenuInput = new MainMenuInputState(this.listenerId);
         GameState subMenu = new GameState();
 
-/*
+
         startMatchFocus.AddStateChange("down", controlsFocus);
         startMatchFocus.AddStateChange("selected", startMatchSelected);
         controlsFocus.AddStateChange("up", startMatchFocus);
@@ -49,8 +49,8 @@ public class MainMenu : GameStateMachine {
         settingsSelected.AddStateChange("closed", settingsFocus);
         exitGameFocus.AddStateChange("up", settingsFocus);
         exitGameFocus.AddStateChange("selected", exitGameSelected);
-*/
 
+/*
         startMatchFocus.AddStateChange("down", controlsFocus);
         startMatchFocus.AddStateChange("selected", startMatchSelected);
         controlsFocus.AddStateChange("up", startMatchFocus);
@@ -59,7 +59,7 @@ public class MainMenu : GameStateMachine {
         controlsSelected.AddStateChange("closed", controlsFocus);
         exitGameFocus.AddStateChange("up", controlsFocus);
         exitGameFocus.AddStateChange("selected", exitGameSelected);
-
+*/
         waitingForLoadedState.AddStateChange("loaded", mainMenuInput);
         mainMenuInput.AddStateChange("subMenu", subMenu);
         subMenu.AddStateChange("closed", mainMenuInput);
