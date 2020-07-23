@@ -8,8 +8,10 @@ public class CollisionLossState : GameEventListenerState
 
     private double timer, timer2, timer3;
     private Player player;
+    private ChargeStatus chargeStatus;
     public CollisionLossState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
+        this.chargeStatus = this.gameObject.GetComponent<ChargeStatus>();
     }
 
     public override void Begin() {
@@ -17,6 +19,7 @@ public class CollisionLossState : GameEventListenerState
         this.timer = 0.5;
         this.timer2 = 0.5;
         this.timer3 = 0.5;
+        this.chargeStatus.SetInactive();
     }
 
     public override void Tick() {

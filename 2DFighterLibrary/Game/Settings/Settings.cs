@@ -9,18 +9,18 @@ public class Settings: GameStateMachine
     public static float gameSpeed = 1.0f;
     public static float moveForward = 5.0f;
     public static float moveBackward = -2.5f;
-    public static float quickStepForward = 40.0f;
-    public static float quickStepForwardTimer1 = 0.1f;
-    public static float quickStepForwardTimer2 = 0.9f;
-    public static float quickStepBackward = -20.0f;
-    public static float quickStepBackwardTimer1 = 0.1f;
-    public static float quickStepBackwardTimer2 = 0.9f;
+    public static float quickStepForward = 30.0f;
+    public static float quickStepForwardTimer1 = 0.2f;
+    public static float quickStepForwardTimer2 = 0.8f;
+    public static float quickStepBackward = -15.0f;
+    public static float quickStepBackwardTimer1 = 0.2f;
+    public static float quickStepBackwardTimer2 = 0.8f;
     public static float charge = 15.0f;
-    public static float dashChargeTimer = 1.0f;
+    public static float dashChargeTimer = 0.5f;
     public static float dash = 45.0f;
-    public static float dashTimer = 0.125f;
+    public static float dashTimer = 0.2f;
     public static float chargeRecoveryTimer = 0.5f;
-    public static float collisionLoss = -12.0f;
+    public static float collisionLoss = -10.0f;
     public static float collisionWin = -2.5f;
 
     public override void Begin(){

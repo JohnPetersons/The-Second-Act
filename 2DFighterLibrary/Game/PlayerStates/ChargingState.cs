@@ -27,9 +27,6 @@ public class ChargingState : GameEventListenerState
         if (gameEvent.GetName().Equals("chargeButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_UP)) {
             new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
         }
-        if (result != this) {
-            this.chargeStatus.SetInactive();
-        }
         return result;
     }
 }

@@ -8,9 +8,11 @@ public class CollisionWinState : GameEventListenerState
 
     private double timer, timer2, timer3;
     private Player player;
+    private ChargeStatus chargeStatus;
 
     public CollisionWinState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
+        this.chargeStatus = this.gameObject.GetComponent<ChargeStatus>();
     }
 
     public override void Begin() {
@@ -18,6 +20,7 @@ public class CollisionWinState : GameEventListenerState
         this.timer = 0.5;
         this.timer2 = 0.5;
         this.timer3 = 0.5;
+        this.chargeStatus.SetInactive();
         GameLoader loader = GameSystem.GetGameData<GameLoader>("GameLoader");
         if (this.GetListenerId().Equals(Player1.TAG)) {
             loader.Load("CollisionEffect,0,0,-20");

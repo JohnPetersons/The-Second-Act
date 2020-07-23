@@ -28,12 +28,4 @@ public class DashState : GameEventListenerState
         }
         this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
     }
-
-    public override GameState GetNextState(GameEvent gameEvent) {
-        GameState result = base.GetNextState(gameEvent);
-        if (result != this) {
-            this.chargeStatus.SetInactive();
-        }
-        return result;
-    }
 }

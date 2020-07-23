@@ -6,12 +6,14 @@ using GenericUnityGame;
 public class ChargeRecoveryState : GameEventListenerState
 {
     private double timer;
+    private ChargeStatus chargeStatus;
     public ChargeRecoveryState(GameEventListenerId listenerId): base(listenerId) {
-
+        this.chargeStatus = this.gameObject.GetComponent<ChargeStatus>();
     }
 
     public override void Begin() {
         this.timer = Settings.chargeRecoveryTimer;
+        this.chargeStatus.SetInactive();
     }
 
     public override void Tick() {
