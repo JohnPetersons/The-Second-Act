@@ -7,7 +7,7 @@ public class MainMenuInputState : GameEventListenerState
 {
     private double focusChangeTimerDefault, focusChangeTimer;
     public MainMenuInputState(GameEventListenerId listenerId): base(listenerId) {
-        this.focusChangeTimer = this.focusChangeTimerDefault = 0.2;
+        this.focusChangeTimer = this.focusChangeTimerDefault = 0.25;
     }
 
     public override void Begin() {

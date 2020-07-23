@@ -7,16 +7,16 @@ public class FeintState : GameEventListenerState
 {
     private Player player;
     private double timer1, timer;
-    private bool canMove;
+    private int canMove;
     public FeintState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
-        this.timer1 = Settings.dashChargeTimer;
+        this.timer1 = GameSystem.GetGameData<Settings>("Settings").GetSetting("dashChargeTimer");
     }
 
     public override void Begin() {
         base.Begin();
         this.timer = this.timer1;
-        this.canMove = false;
+        this.canMove = 0;
     }
     
     public override void Tick() {
@@ -30,9 +30,11 @@ public class FeintState : GameEventListenerState
     public override GameState GetNextState(GameEvent gameEvent) {
         GameState result = base.GetNextState(gameEvent);
         if (gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() == 0) {
-            this.canMove = true;
-        } else if (this.canMove && gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() != 0) {
+            this.canMove++;
+        } else if (this.canMove > 1 && gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() != 0) {
             new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
+        } else {
+            this.canMove = 0;
         }
         return result;
     }

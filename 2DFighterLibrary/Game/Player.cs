@@ -165,6 +165,7 @@ public class Player : GameStateMachine {
 
         this.input = new GameInputState(this.listenerId, 0);
         this.input.SetInputMapping(GameInputState.LEFT_STICK_LEFT_RIGHT, "moveStick");
+        this.input.SetInputMapping(GameInputState.D_PAD_LEFT_RIGHT, "moveStick");
         this.input.SetInputMapping(GameInputState.A, "chargeButton");
         this.input.SetInputMapping(GameInputState.B, "quickStepButton");
         this.input.SetInputMapping(GameInputState.X, "dashButton");
@@ -189,6 +190,6 @@ public class Player : GameStateMachine {
     }
 
     public float GetDirection() {
-        return this.direction * Settings.gameSpeed;
+        return this.direction * GameSystem.GetGameData<Settings>("Settings").GetSetting("gameSpeed");
     }
 }

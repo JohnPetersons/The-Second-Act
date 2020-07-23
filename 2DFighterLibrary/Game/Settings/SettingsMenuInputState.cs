@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using GenericUnityGame;
 
-public class SettingsInputState : GameEventListenerState
+public class SettingsMenuInputState : GameEventListenerState
 {
     private double focusChangeTimerDefault, focusChangeTimer;
-    public SettingsInputState(GameEventListenerId listenerId): base(listenerId) {
+    public SettingsMenuInputState(GameEventListenerId listenerId): base(listenerId) {
         this.focusChangeTimer = this.focusChangeTimerDefault = 0.2;
     }
 

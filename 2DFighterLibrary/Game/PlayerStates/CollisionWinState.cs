@@ -49,7 +49,8 @@ public class CollisionWinState : GameEventListenerState
             this.timer -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else if (this.timer2 > 0) {
             this.timer2 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
-            this.gameObject.transform.Translate(new Vector3(Settings.collisionWin * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+            float collisionWin = GameSystem.GetGameData<Settings>("Settings").GetSetting("collisionWin");
+            this.gameObject.transform.Translate(new Vector3(collisionWin * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         } else if (this.timer3 > 0) {
             this.timer3 -= GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime);
         } else {

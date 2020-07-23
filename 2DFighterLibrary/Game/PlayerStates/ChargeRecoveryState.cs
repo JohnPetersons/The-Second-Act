@@ -13,7 +13,7 @@ public class ChargeRecoveryState : GameEventListenerState
     }
 
     public override void Begin() {
-        this.timer = Settings.chargeRecoveryTimer;
+        this.timer = GameSystem.GetGameData<Settings>("Settings").GetSetting("chargeRecoveryTimer");
         this.chargeStatus.SetInactive();
     }
 

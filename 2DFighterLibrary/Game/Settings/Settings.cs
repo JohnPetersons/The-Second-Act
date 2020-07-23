@@ -6,64 +6,86 @@ using System.IO;
 
 public class Settings: GameStateMachine
 {
-    private double focusChangeTimerDefault, focusChangeTimer;
-    public static float gameSpeed = 1.0f;
-    public static float moveForward = 5.0f;
-    public static float moveBackward = -2.5f;
-    public static float quickStepForward = 30.0f;
-    public static float quickStepForwardTimer1 = 0.2f;
-    public static float quickStepForwardTimer2 = 0.8f;
-    public static float quickStepBackward = -15.0f;
-    public static float quickStepBackwardTimer1 = 0.2f;
-    public static float quickStepBackwardTimer2 = 0.8f;
-    public static float charge = 15.0f;
-    public static float dashChargeTimer = 0.5f;
-    public static float dash = 60.0f;
-    public static float dashTimer = 0.2f;
-    public static float chargeRecoveryTimer = 0.5f;
-    public static float dashRecoveryTimer = 1.5f;
-    public static float collisionLoss = -10.0f;
-    public static float collisionWin = -2.5f;
+
+    public static string TAG = "Settings";
+
+    private static float PRECISION = 0.04f;
+
+    private Dictionary<string, float> settingsList;
+    private Dictionary<string, float> defaultSettingsList;
 
     public override void Begin(){
         base.Begin();
 
-        Dictionary<string, float> settingsList = new Dictionary<string, float>();
+        GameSystem.SetGameData<Settings>(Settings.TAG, this);
+
+        this.settingsList = new Dictionary<string, float>();
+        this.defaultSettingsList = new Dictionary<string, float>();
+
+        this.settingsList.Add("gameSpeed", 1.0f);
+        this.settingsList.Add("charge", 1.0f);
+        this.settingsList.Add("moveForward", 1.0f);
+        this.settingsList.Add("moveBackward", 1.0f);
+        this.settingsList.Add("quickStepForward", 1.0f);
+        this.settingsList.Add("quickStepForwardTimer1", 1.0f);
+        this.settingsList.Add("quickStepForwardTimer2", 1.0f);
+        this.settingsList.Add("quickStepBackward", 1.0f);
+        this.settingsList.Add("quickStepBackwardTimer1", 1.0f);
+        this.settingsList.Add("quickStepBackwardTimer2", 1.0f);
+        this.settingsList.Add("dashChargeTimer", 1.0f);
+        this.settingsList.Add("dash", 1.0f);
+        this.settingsList.Add("dashTimer", 1.0f);
+        this.settingsList.Add("chargeRecoveryTimer", 1.0f);
+        this.settingsList.Add("dashRecoveryTimer", 1.0f);
+        this.settingsList.Add("collisionLoss", 1.0f);
+        this.settingsList.Add("collisionWin", 1.0f);
+
+        this.defaultSettingsList.Add("gameSpeed", 1.0f);
+        this.defaultSettingsList.Add("charge", 15.0f);
+        this.defaultSettingsList.Add("moveForward", 5.0f);
+        this.defaultSettingsList.Add("moveBackward", -2.5f);
+        this.defaultSettingsList.Add("quickStepForward", 30.0f);
+        this.defaultSettingsList.Add("quickStepForwardTimer1", 0.2f);
+        this.defaultSettingsList.Add("quickStepForwardTimer2", 0.8f);
+        this.defaultSettingsList.Add("quickStepBackward", -15.0f);
+        this.defaultSettingsList.Add("quickStepBackwardTimer1", 0.2f);
+        this.defaultSettingsList.Add("quickStepBackwardTimer2", 0.8f);
+        this.defaultSettingsList.Add("dashChargeTimer", 0.75f);
+        this.defaultSettingsList.Add("dash", 60.0f);
+        this.defaultSettingsList.Add("dashTimer", 0.15f);
+        this.defaultSettingsList.Add("chargeRecoveryTimer", 0.5f);
+        this.defaultSettingsList.Add("dashRecoveryTimer", 1.0f);
+        this.defaultSettingsList.Add("collisionLoss", -10.0f);
+        this.defaultSettingsList.Add("collisionWin", -2.5f);
+        this.LoadSettings();
+    }
+
+    private void LoadSettings() {
         if (File.Exists(@"settings.txt")) {
             foreach (string line in File.ReadLines(@"settings.txt")) {
-                settingsList.Add(line.Substring(0, line.IndexOf(",")), float.Parse(line.Substring(line.IndexOf(",") + 1)));
+                this.settingsList[line.Substring(0, line.IndexOf(","))] = float.Parse(line.Substring(line.IndexOf(",") + 1));
             }
-            Settings.gameSpeed *= settingsList["gameSpeed"];
-            Settings.charge *= settingsList["charge"];
-            Settings.moveForward *= settingsList["moveForward"];
-            Settings.moveBackward *= settingsList["moveBackward"];
-            Settings.quickStepForward *= settingsList["quickStepForward"];
-            Settings.quickStepForwardTimer1 *= settingsList["quickStepForwardTimer1"];
-            Settings.quickStepForwardTimer2 *= settingsList["quickStepForwardTimer2"];
-            Settings.quickStepBackward *= settingsList["quickStepBackward"];
-            Settings.quickStepBackwardTimer1 *= settingsList["quickStepBackwardTimer1"];
-            Settings.quickStepBackwardTimer2 *= settingsList["quickStepBackwardTimer2"];
-            Settings.dashChargeTimer *= settingsList["dashChargeTimer"];
-            Settings.dash *= settingsList["dash"];
-            Settings.dashTimer *= settingsList["dashTimer"];
-            Settings.chargeRecoveryTimer *= settingsList["chargeRecoveryTimer"];
-            Settings.dashRecoveryTimer *= settingsList["dashRecoveryTimer"];
-            Settings.collisionLoss *= settingsList["collisionLoss"];
-            Settings.collisionWin *= settingsList["collisionWin"];
         }
+    }
 
-        this.focusChangeTimer = this.focusChangeTimerDefault = 0.2;
+    private void SaveSettings() {
+        List<string> saveStrings = new List<string>();
+        foreach(string str in this.settingsList.Keys) {
+            saveStrings.Add(str +"," + this.settingsList[str]);
+        }
+        File.Delete(@"settings.txt");
+        File.WriteAllLines(@"settings.txt", saveStrings);
+    }
 
-        SettingsInputState settingsInput = new SettingsInputState(this.listenerId);
-        
-        GameInputState input = new GameInputState(this.listenerId, 1);
-        input.SetInputMapping(GameInputState.LEFT_STICK_UP_DOWN, "leftStickUpDown");
-        input.SetInputMapping(GameInputState.LEFT_STICK_LEFT_RIGHT, "leftStickLeftRight");
-        input.SetInputMapping(GameInputState.A, "select");
-        input.SetInputMapping(GameInputState.B, "close");
+    public float GetSetting(string str) {
+        return this.defaultSettingsList[str] * this.settingsList[str];
+    }
 
-        this.AddCurrentState(settingsInput);
-        this.AddCurrentState(input);
+    public void SetSetting(string str, float f) {
+        if (f < 1 + Settings.PRECISION && f > 1 - Settings.PRECISION) {
+            f = 1;
+        }
+        this.settingsList[str] = f;
     }
 
     public override void Tick(){

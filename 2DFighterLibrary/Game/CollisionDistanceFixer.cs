@@ -17,9 +17,8 @@ public class CollisionDistanceFixer : GameEventListener
         base.Begin();
         this.previousX = this.previousX2 = this.gameObject.transform.position.x;
         this.edge = 0.5;
-        this.timer = 0.025;
-        this.effectTimer = 0.025;
-        this.loader = new GameLoader();
+        this.timer = this.effectTimer = 1.0;
+        this.loader = GameSystem.GetGameData<GameLoader>("GameLoader");;
     }
 
     public override void Tick() {
@@ -27,10 +26,10 @@ public class CollisionDistanceFixer : GameEventListener
         previousX2 = previousX;
         previousX = this.gameObject.transform.position.x;
         if (this.timer <= 0) {
-            //GameSystem.GetGameData<GameLoader>("GameLoader").Load("DustEffect," + this.transform.position.x + ",0,-3");
+            this.loader.Load("DustEffect," + this.transform.position.x + ",0,-3");
             this.timer = this.effectTimer;
         }
-        //this.timer -= Math.Abs(previousX - previousX2) * (Math.Abs(previousX - previousX2) / 2);
+        this.timer -= Math.Abs(previousX - previousX2);
     }
 
     public double GetVelocity() {
@@ -57,20 +56,12 @@ public class CollisionDistanceFixer : GameEventListener
             if (fixer != null) {
                 double total = Math.Abs(fixer.GetVelocity()) + Math.Abs(this.GetVelocity());
                 float distance = (float)(this.GetEdge() + fixer.GetEdge()) - Vector3.Distance(this.transform.position, go.transform.position);
-                Debug.Log("total " + total);
                 if (total != 0) {
                     new TypedGameEvent<double>(this.GetListenerId(), "fixCollision", -1 * distance * ((this.GetVelocity() / total)));
                 }
             }
         } else if (gameEvent.GetName().Equals("fixCollision")) {
-            Debug.Log(this.transform.position.x);
             this.transform.Translate(new Vector3((float)gameEvent.GetGameData<double>(), 0, 0));
-            Debug.Log(this.transform.position.x);
         }
-    }
-
-    public override void OnDestroy() {
-        base.OnDestroy();
-        this.loader.RemoveLoaded();
     }
 }

@@ -9,7 +9,7 @@ public class DashChargingState : GameEventListenerState
     private double timer1, timer;
     public DashChargingState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
-        this.timer1 = Settings.dashChargeTimer;
+        this.timer1 = GameSystem.GetGameData<Settings>("Settings").GetSetting("dashChargeTimer");
     }
 
     public override void Begin() {

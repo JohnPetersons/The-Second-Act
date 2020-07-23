@@ -13,7 +13,7 @@ public class DashRecoveryState : GameEventListenerState
     }
 
     public override void Begin() {
-        this.timer = Settings.dashRecoveryTimer;
+        this.timer = GameSystem.GetGameData<Settings>("Settings").GetSetting("dashRecoveryTimer");
     }
 
     public override void Tick() {

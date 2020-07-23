@@ -11,7 +11,7 @@ public class DashState : GameEventListenerState
     public DashState(GameEventListenerId listenerId): base(listenerId) {
         this.player = this.gameObject.GetComponent<Player>();
         this.chargeStatus = this.gameObject.GetComponent<ChargeStatus>();
-        this.timer1 = Settings.dashTimer;
+        this.timer1 = GameSystem.GetGameData<Settings>("Settings").GetSetting("dashTimer");
     }
 
     public override void Begin() {
@@ -22,7 +22,8 @@ public class DashState : GameEventListenerState
     
     public override void Tick() {
         base.Tick();
-        this.gameObject.transform.Translate(new Vector3(Settings.dash * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
+        float dash = GameSystem.GetGameData<Settings>("Settings").GetSetting("dash");
+        this.gameObject.transform.Translate(new Vector3(dash * (float)GameSystem.GetDeltaTime(GameSystem.GAMEPLAY, Time.deltaTime) * this.player.GetDirection(), 0.0f, 0.0f));
         if (this.timer <= 0) {
             new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
         }

@@ -32,9 +32,6 @@ public class PlayerPlayingState: GameEventListenerState
             new TypedGameEvent<bool>(this.GetListenerId(), "dashCharge", true);
         } else if (gameEvent.GetName().Equals("feintButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
             new TypedGameEvent<bool>(this.GetListenerId(), "feint", true);
-        //} else if (gameEvent.GetName().Equals("specialButton") && gameEvent.GetGameData<string>().Equals(GameInputState.KEY_DOWN)) {
-            // commented out until I put in specials
-            //new TypedGameEvent<bool>(this.GetListenerId(), "special", true);
         } else if (gameEvent.GetName().Equals("triggerEnter")) {
             new TypedGameEvent<GameObject>(this.GetListenerId(), "collision", gameEvent.GetGameData<GameObject>());
         } else if (gameEvent.GetName().Equals("start")) {

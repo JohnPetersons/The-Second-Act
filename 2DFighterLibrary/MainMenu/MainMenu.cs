@@ -66,6 +66,7 @@ public class MainMenu : GameStateMachine {
 
         GameInputState input = new GameInputState(this.listenerId, 1);
         input.SetInputMapping(GameInputState.LEFT_STICK_UP_DOWN, "leftStick");
+        input.SetInputMapping(GameInputState.D_PAD_UP_DOWN, "leftStick");
         input.SetInputMapping(GameInputState.A, "select");
 
         this.AddCurrentState(startMatchFocus);
