@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using GenericUnityGame;
 
-public class ChargeRecoveryState : GameEventListenerState
+public class DashRecoveryState : GameEventListenerState
 {
     private double timer, chargeInActiveTimer;
     private ChargeStatus chargeStatus;
-    public ChargeRecoveryState(GameEventListenerId listenerId): base(listenerId) {
+    public DashRecoveryState(GameEventListenerId listenerId): base(listenerId) {
         this.chargeStatus = this.gameObject.GetComponent<ChargeStatus>();
         this.chargeInActiveTimer = 2;
     }
 
     public override void Begin() {
-        this.timer = Settings.chargeRecoveryTimer;
-        this.chargeStatus.SetInactive();
+        this.timer = Settings.dashRecoveryTimer;
     }
 
     public override void Tick() {

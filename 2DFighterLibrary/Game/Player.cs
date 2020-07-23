@@ -38,6 +38,7 @@ public class Player : GameStateMachine {
         FeintState feint = new FeintState(this.listenerId);
         ChargingState charging = new ChargingState(this.listenerId);
         ChargeRecoveryState chargeRecovery = new ChargeRecoveryState(this.listenerId);
+        DashRecoveryState dashRecovery = new DashRecoveryState(this.listenerId);
         SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
         SpecialChargingState specialCharging = new SpecialChargingState(this.listenerId);
         CollisionWinCondition collisionWinCond = new CollisionWinCondition(this.listenerId); 
@@ -119,7 +120,7 @@ public class Player : GameStateMachine {
         dashCharging.AddStateChange("collisionLoss", collisionLoss);
         dashCharging.AddGameStateCondition(collisionWinCond);
         dashCharging.AddGameStateCondition(collisionLossCond);
-        dash.AddStateChange("stop", chargeRecovery);
+        dash.AddStateChange("stop", dashRecovery);
         dash.AddStateChange("collisionWin", collisionWin);
         dash.AddStateChange("collisionLoss", collisionLoss);
         dash.AddGameStateCondition(collisionWinCond);
@@ -137,6 +138,11 @@ public class Player : GameStateMachine {
         chargeRecovery.AddStateChange("collisionLoss", collisionLoss);
         chargeRecovery.AddGameStateCondition(collisionWinCond);
         chargeRecovery.AddGameStateCondition(collisionLossCond);
+        dashRecovery.AddStateChange("recover", idle);
+        dashRecovery.AddStateChange("collisionWin", collisionWin);
+        dashRecovery.AddStateChange("collisionLoss", collisionLoss);
+        dashRecovery.AddGameStateCondition(collisionWinCond);
+        dashRecovery.AddGameStateCondition(collisionLossCond);
         specialActivate.AddStateChange("specialCharge", specialCharging);
         specialActivate.AddStateChange("collisionWin", collisionWin);
         specialActivate.AddStateChange("collisionLoss", collisionLoss);
