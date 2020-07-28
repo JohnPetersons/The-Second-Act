@@ -25,7 +25,7 @@ public class MovingForwardState : GameEventListenerState
     public override GameState GetNextState(GameEvent gameEvent) {
         GameState result = base.GetNextState(gameEvent);
         if (gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() == 0) {
-            if (this.stop > 1) {
+            if (this.stop > 2) {
                 new TypedGameEvent<bool>(this.GetListenerId(), "stop", true, true);
             } else {
                 this.stop++;

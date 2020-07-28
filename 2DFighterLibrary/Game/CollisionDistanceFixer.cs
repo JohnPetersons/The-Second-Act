@@ -57,7 +57,7 @@ public class CollisionDistanceFixer : GameEventListener
                 double total = Math.Abs(fixer.GetVelocity()) + Math.Abs(this.GetVelocity());
                 float distance = (float)(this.GetEdge() + fixer.GetEdge()) - Vector3.Distance(this.transform.position, go.transform.position);
                 if (total != 0) {
-                    new TypedGameEvent<double>(this.GetListenerId(), "fixCollision", -1 * distance * ((this.GetVelocity() / total)));
+                    new TypedGameEvent<double>(this.GetListenerId(), "fixCollision", -1 * distance * ((this.GetVelocity() / total)), true);
                 }
             }
         } else if (gameEvent.GetName().Equals("fixCollision")) {

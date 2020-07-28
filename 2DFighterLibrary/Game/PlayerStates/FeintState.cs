@@ -31,9 +31,9 @@ public class FeintState : GameEventListenerState
         GameState result = base.GetNextState(gameEvent);
         if (gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() == 0) {
             this.canMove++;
-        } else if (this.canMove > 1 && gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() != 0) {
+        } else if (this.canMove > 2 && gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() != 0) {
             new TypedGameEvent<bool>(this.GetListenerId(), "stop", true);
-        } else {
+        } else if (gameEvent.GetName().Equals("moveStick") && gameEvent.GetGameData<double>() != 0) {
             this.canMove = 0;
         }
         return result;

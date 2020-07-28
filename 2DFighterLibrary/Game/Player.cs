@@ -39,8 +39,8 @@ public class Player : GameStateMachine {
         ChargingState charging = new ChargingState(this.listenerId);
         ChargeRecoveryState chargeRecovery = new ChargeRecoveryState(this.listenerId);
         DashRecoveryState dashRecovery = new DashRecoveryState(this.listenerId);
-        SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
-        SpecialChargingState specialCharging = new SpecialChargingState(this.listenerId);
+        //SpecialActivateState specialActivate = new SpecialActivateState(this.listenerId);
+        //SpecialChargingState specialCharging = new SpecialChargingState(this.listenerId);
         CollisionWinCondition collisionWinCond = new CollisionWinCondition(this.listenerId); 
         CollisionLossCondition collisionLossCond = new CollisionLossCondition(this.listenerId); 
         CollisionWinState collisionWin = new CollisionWinState(this.listenerId);
@@ -52,7 +52,7 @@ public class Player : GameStateMachine {
         VictoryState victory = new VictoryState(this.listenerId);
         DefeatState defeat = new DefeatState(this.listenerId);
 
-        SpecialActivateCondition specialActivateCond = new SpecialActivateCondition(this.listenerId);
+        //SpecialActivateCondition specialActivateCond = new SpecialActivateCondition(this.listenerId);
         DefeatCondition defeatCond = new DefeatCondition(this.listenerId);
 
         idle.AddStateChange("moveForward", movingForward);
@@ -62,10 +62,10 @@ public class Player : GameStateMachine {
         idle.AddStateChange("feint", feint);
         idle.AddStateChange("collisionWin", collisionWin);
         idle.AddStateChange("collisionLoss", collisionLoss);
-        idle.AddStateChange("specialActivate", specialActivate);
+        //idle.AddStateChange("specialActivate", specialActivate);
         idle.AddGameStateCondition(collisionWinCond);
         idle.AddGameStateCondition(collisionLossCond);
-        idle.AddGameStateCondition(specialActivateCond);
+        //idle.AddGameStateCondition(specialActivateCond);
         movingForward.AddStateChange("stop", idle);
         movingForward.AddStateChange("quickStep", quickStepForward);
         movingForward.AddStateChange("moveBackward", movingBackward);
@@ -74,20 +74,20 @@ public class Player : GameStateMachine {
         movingForward.AddStateChange("feint", feint);
         movingForward.AddStateChange("collisionWin", collisionWin);
         movingForward.AddStateChange("collisionLoss", collisionLoss);
-        movingForward.AddStateChange("specialActivate", specialActivate);
+        //movingForward.AddStateChange("specialActivate", specialActivate);
         movingForward.AddGameStateCondition(collisionWinCond);
         movingForward.AddGameStateCondition(collisionLossCond);
-        movingForward.AddGameStateCondition(specialActivateCond);
+        //movingForward.AddGameStateCondition(specialActivateCond);
         quickStepForward.AddStateChange("stop", idle);
         quickStepForward.AddStateChange("charge", charging);
         quickStepForward.AddStateChange("dashCharge", dashCharging);
         quickStepForward.AddStateChange("feint", feint);
         quickStepForward.AddStateChange("collisionWin", collisionWin);
         quickStepForward.AddStateChange("collisionLoss", collisionLoss);
-        quickStepForward.AddStateChange("specialActivate", specialActivate);
+        //quickStepForward.AddStateChange("specialActivate", specialActivate);
         quickStepForward.AddGameStateCondition(collisionWinCond);
         quickStepForward.AddGameStateCondition(collisionLossCond);
-        quickStepForward.AddGameStateCondition(specialActivateCond);
+        //quickStepForward.AddGameStateCondition(specialActivateCond);
         movingBackward.AddStateChange("stop", idle);
         movingBackward.AddStateChange("quickStep", quickStepBackward);
         movingBackward.AddStateChange("moveForward", movingForward);
@@ -96,20 +96,20 @@ public class Player : GameStateMachine {
         movingBackward.AddStateChange("feint", feint);
         movingBackward.AddStateChange("collisionWin", collisionWin);
         movingBackward.AddStateChange("collisionLoss", collisionLoss);
-        movingBackward.AddStateChange("specialActivate", specialActivate);
+        //movingBackward.AddStateChange("specialActivate", specialActivate);
         movingBackward.AddGameStateCondition(collisionWinCond);
         movingBackward.AddGameStateCondition(collisionLossCond);
-        movingBackward.AddGameStateCondition(specialActivateCond);
+        //movingBackward.AddGameStateCondition(specialActivateCond);
         quickStepBackward.AddStateChange("stop", idle);
         quickStepBackward.AddStateChange("charge", charging);
         quickStepBackward.AddStateChange("dashCharge", dashCharging);
         quickStepBackward.AddStateChange("feint", feint);
         quickStepBackward.AddStateChange("collisionWin", collisionWin);
         quickStepBackward.AddStateChange("collisionLoss", collisionLoss);
-        quickStepBackward.AddStateChange("specialActivate", specialActivate);
+        //quickStepBackward.AddStateChange("specialActivate", specialActivate);
         quickStepBackward.AddGameStateCondition(collisionWinCond);
         quickStepBackward.AddGameStateCondition(collisionLossCond);
-        quickStepBackward.AddGameStateCondition(specialActivateCond);
+        //quickStepBackward.AddGameStateCondition(specialActivateCond);
         charging.AddStateChange("stop", chargeRecovery);
         charging.AddStateChange("collisionWin", collisionWin);
         charging.AddStateChange("collisionLoss", collisionLoss);
@@ -143,7 +143,7 @@ public class Player : GameStateMachine {
         dashRecovery.AddStateChange("collisionLoss", collisionLoss);
         dashRecovery.AddGameStateCondition(collisionWinCond);
         dashRecovery.AddGameStateCondition(collisionLossCond);
-        specialActivate.AddStateChange("specialCharge", specialCharging);
+        /*specialActivate.AddStateChange("specialCharge", specialCharging);
         specialActivate.AddStateChange("collisionWin", collisionWin);
         specialActivate.AddStateChange("collisionLoss", collisionLoss);
         specialActivate.AddGameStateCondition(collisionWinCond);
@@ -152,7 +152,7 @@ public class Player : GameStateMachine {
         specialCharging.AddStateChange("collisionWin", collisionWin);
         specialCharging.AddStateChange("collisionLoss", collisionLoss);
         specialCharging.AddGameStateCondition(collisionWinCond);
-        specialCharging.AddGameStateCondition(collisionLossCond);
+        specialCharging.AddGameStateCondition(collisionLossCond);*/
         collisionWin.AddStateChange("recover", idle);
         collisionLoss.AddStateChange("recover", idle);
 
